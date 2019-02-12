@@ -5,14 +5,12 @@ import (
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
-	"hash"
 	"io"
 )
 
 // MD5 ...
 func MD5(s string) (ret string) {
-	var h hash.Hash
-	h = md5.New()
+	h := md5.New()
 	io.WriteString(h, s)
 	ret = hex.EncodeToString(h.Sum(nil))
 	return
@@ -20,8 +18,7 @@ func MD5(s string) (ret string) {
 
 // SHA1 ...
 func SHA1(s string) (ret string) {
-	var h hash.Hash
-	h = sha1.New()
+	h := sha1.New()
 	io.WriteString(h, s)
 	ret = hex.EncodeToString(h.Sum(nil))
 	return
@@ -29,8 +26,7 @@ func SHA1(s string) (ret string) {
 
 // SHA256 ...
 func SHA256(s string) (ret string) {
-	var h hash.Hash
-	h = sha256.New()
+	h := sha256.New()
 	io.WriteString(h, s)
 	ret = hex.EncodeToString(h.Sum(nil))
 	return
