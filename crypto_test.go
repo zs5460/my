@@ -1,6 +1,7 @@
 package my
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -19,5 +20,18 @@ func TestSHA1(t *testing.T) {
 func TestSHA256(t *testing.T) {
 	if SHA256("zs5460") != "9f9430e4c60941321b24893d72086d771326a51bbd3bdd29cbcad229148631b4" {
 		t.Error("SHA256 value is wrong")
+	}
+}
+
+func TestHMACSHA1(t *testing.T) {
+	if HMACSHA1("zs5460", "123456") != "9bd117811a0ff843655f0fbda7fc6fac404bffc4" {
+		t.Error("HMAC_SHA1 value is wrong")
+	}
+}
+
+func BenchmarkHMACSHA1(b *testing.B) {
+	s := strings.Repeat("hello", 1000)
+	for i := 0; i < b.N; i++ {
+		HMACSHA1(s, "123456")
 	}
 }
