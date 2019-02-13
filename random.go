@@ -5,14 +5,25 @@ import (
 	"time"
 )
 
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
 // RndStr ...
 func RndStr(n int) string {
+	if n < 1 {
+		return ""
+	}
+	if n > 32 {
+		n = 32
+	}
 	str := "abcdefghijklmnopqrstuvwxyz0123456789"
+	length := len(str)
 	bytes := []byte(str)
 	result := []byte{}
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
 	for i := 0; i < n; i++ {
-		result = append(result, bytes[r.Intn(len(bytes))])
+		result = append(result, bytes[rand.Intn(length)])
 	}
 	return string(result)
 }
