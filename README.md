@@ -3,7 +3,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/zs5460/my)](https://goreportcard.com/report/github.com/zs5460/my)
 [![GoDoc](https://godoc.org/github.com/zs5460/my?status.svg)](https://godoc.org/github.com/zs5460/my)
 
-My util library
+my utility package
 
 ### Install
 
@@ -14,4 +14,4 @@ $ go get -u github.com/zs5460/my
 License
 ---
 
-Licensed under The BSD License
+Licensed under The BSD-2-Clause License
