@@ -24,7 +24,7 @@ func TestIsEmpty(t *testing.T) {
 func TestLeft(t *testing.T) {
 	var tests = []struct {
 		src    string
-		lenght int
+		length int
 		want   string
 	}{
 		{"zs5460", 2, "zs"},
@@ -36,10 +36,10 @@ func TestLeft(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		if got := Left(test.src, test.lenght); got != test.want {
+		if got := Left(test.src, test.length); got != test.want {
 			t.Errorf("Left(%q,%d) = %v, want %s",
 				test.src,
-				test.lenght,
+				test.length,
 				got,
 				test.want)
 		}
@@ -50,7 +50,7 @@ func TestRight(t *testing.T) {
 
 	var tests = []struct {
 		src    string
-		lenght int
+		length int
 		want   string
 	}{
 		{"zs5460", 2, "60"},
@@ -62,10 +62,10 @@ func TestRight(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		if got := Right(test.src, test.lenght); got != test.want {
+		if got := Right(test.src, test.length); got != test.want {
 			t.Errorf("Right(%q,%d) = %v, want %s",
 				test.src,
-				test.lenght,
+				test.length,
 				got,
 				test.want)
 		}
