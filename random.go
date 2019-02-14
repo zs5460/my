@@ -9,17 +9,43 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// RndStr ...
-func RndStr(n int) string {
-	if n < 1 {
-		return ""
+// RndNumber ...
+func RndNumber(n int) string {
+	return genRandom(n, 0)
+}
+
+// RndAlpha ...
+func RndAlpha(n int) string {
+	return genRandom(n, 1)
+}
+
+// RndString ...
+func RndString(n int) string {
+	return genRandom(n, 2)
+}
+
+// RndFilename
+func RndFilename(ext string) string {
+	if Left(ext, 1) != "." {
+		ext = "." + ext
 	}
-	if n > 32 {
+	return time.Now().Format("20060102150405") + genRandom(6, 0) + ext
+}
+
+func genRandom(n, charType int) string {
+	if n < 0 || n > 32 {
 		n = 32
 	}
-	str := "abcdefghijklmnopqrstuvwxyz0123456789"
-	length := len(str)
-	bytes := []byte(str)
+	if charType < 0 || charType > 2 {
+		charType = 1
+	}
+	chars := []string{
+		"0123456789",
+		"abcdefghijklmnopqrstuvwxyz",
+		"abcdefghijklmnopqrstuvwxyz0123456789",
+	}
+	length := len(chars[charType])
+	bytes := []byte(chars[charType])
 	result := []byte{}
 
 	for i := 0; i < n; i++ {
