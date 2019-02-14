@@ -24,7 +24,7 @@ func RndString(n int) string {
 	return genRandom(n, 2)
 }
 
-// RndFilename
+// RndFilename ...
 func RndFilename(ext string) string {
 	if Left(ext, 1) != "." {
 		ext = "." + ext
