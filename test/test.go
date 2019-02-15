@@ -1,20 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"github.com/zs5460/my"
+	"time"
 )
 
 func main() {
-	println(my.Now())
-
-	for i := 0; i < 10; i++ {
-		//	println(my.RndStr(60))
-		//println(my.RndFilename(".jpg"))
-	}
-	println(my.RndFilename("jpg"))
-	println(my.RndFilename(".jpg"))
-	println(my.RndFilename("doc"))
-	println(my.RndFilename(".jpeg"))
-	println(my.RndFilename("jpeg"))
+	t := time.Date(2019, time.February, 15, 15, 1, 1, 0, time.Local)
+	fmt.Printf("%v\n", time.Now())
+	fmt.Printf("%v\n", t)
+	fmt.Printf("%v\n", my.FriendlyTime(t))
 
 }

@@ -9,7 +9,7 @@ import (
 	"hash"
 )
 
-// MD5 ...
+// MD5 calculate the md5 hash of a string.
 func MD5(s string) (ret string) {
 	var h hash.Hash
 	h = md5.New()
@@ -18,7 +18,7 @@ func MD5(s string) (ret string) {
 	return
 }
 
-// SHA1 ...
+// SHA1 calculate the sha1 hash of a string.
 func SHA1(s string) (ret string) {
 	var h hash.Hash
 	h = sha1.New()
@@ -27,7 +27,7 @@ func SHA1(s string) (ret string) {
 	return
 }
 
-// SHA256 ...
+// SHA256 calculate the sha256 hash of a string.
 func SHA256(s string) (ret string) {
 	var h hash.Hash
 	h = sha256.New()
@@ -36,7 +36,7 @@ func SHA256(s string) (ret string) {
 	return
 }
 
-// HMACSHA1 ...
+// HMACSHA1 generate a keyed hash value using the HMAC method.
 func HMACSHA1(s string, key string) (ret string) {
 	var hashFunc = sha1.New
 	h := hmac.New(hashFunc, []byte(key))
