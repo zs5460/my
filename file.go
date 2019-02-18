@@ -1,6 +1,7 @@
 package my
 
 import (
+	"io"
 	"io/ioutil"
 	"os"
 )
@@ -23,6 +24,27 @@ func ReadText(filepath string) (text string, err error) {
 
 // WriteText ...
 func WriteText(filepath string, text string) (err error) {
-	return ioutil.WriteFile(filepath, []byte(text), 0666)
+	//return ioutil.WriteFile(filepath, []byte(text), 0644)
+	return writeText(filepath, text, false)
+}
 
+// AppendText ...
+func AppendText(filepath string, text string) (err error) {
+	return writeText(filepath, text, true)
+}
+
+func writeText(filepath string, text string, appendMode bool) (err error) {
+	var mode int
+	if appendMode {
+		mode = os.O_RDWR | os.O_CREATE | os.O_APPEND
+	} else {
+		mode = os.O_RDWR | os.O_CREATE | os.O_TRUNC
+	}
+	f, err := os.OpenFile(filepath, mode, 0644)
+	defer f.Close()
+	if err != nil {
+		return
+	}
+	io.WriteString(f, text)
+	return
 }
