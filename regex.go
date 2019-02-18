@@ -4,7 +4,7 @@ import (
 	"regexp"
 )
 
-// Test provide some useful regex.
+// Test provides some common regular expression detection features.
 func Test(str, pattern string) (ret bool) {
 	var pa string
 	switch pattern {
