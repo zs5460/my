@@ -15,7 +15,7 @@ func Test(str, pattern string) (ret bool) {
 	case "chinese":
 		pa = "^[\u4e00-\u9fa5]+$"
 	case "username":
-		pa = `^[a-z][a-z0-9]{2,19}$`
+		pa = `^[a-z][a-z0-9]{4,19}$`
 	case "email":
 		pa = `^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$`
 	case "int":
@@ -41,8 +41,7 @@ func Test(str, pattern string) (ret bool) {
 	case "ip":
 		pa = `^\d+\.\d+\.\d+\.\d+$`
 	case "password":
-		pa = `^\w{8,20}$`
-		//pa = `^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$`
+		return Test(str, "[A-Z]") && Test(str, "[a-z]") && Test(str, "[0-9]") && len(str) >= 8
 	default:
 		pa = pattern
 	}

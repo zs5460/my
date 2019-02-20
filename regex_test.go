@@ -29,6 +29,8 @@ func TestTest(t *testing.T) {
 
 		{"Zs123456", "password", true},
 		{"zs5460", "password", false},
+		{"Zs5460", "password", false},
+		{"zs12345678", "password", false},
 
 		{"5460", `^\d{4}$`, true},
 		{"54600", `^\d{4}$`, false},
@@ -36,7 +38,7 @@ func TestTest(t *testing.T) {
 
 	for _, test := range tests {
 		if got := Test(test.str, test.pattern); got != test.want {
-			t.Errorf("Test(%s,%s) = %v, want %v",
+			t.Errorf("Test(%q,%q) = %v, want %v",
 				test.str,
 				test.pattern,
 				got,
