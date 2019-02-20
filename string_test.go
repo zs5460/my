@@ -101,7 +101,7 @@ func TestMid(t *testing.T) {
 
 	for _, test := range tests {
 		if got := Mid(test.src, test.start, test.length); got != test.want {
-			t.Errorf("Mid(%q,%d,%d) = %v, want %s",
+			t.Errorf("Mid(%q,%d,%d) = %v, want %q",
 				test.src,
 				test.start,
 				test.length,
