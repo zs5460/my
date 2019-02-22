@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	//"strconv"
+
 	"github.com/zs5460/my"
 )
 
@@ -20,9 +22,7 @@ func main() {
 			}
 			fmt.Printf("%s\n", s)
 	*/
-	d, _ := my.CDate("2019-02-18 14:40:00")
-
-	//fmt.Println(d)
+	d := my.CDate("2019-02-01 14:40:00")
 	fmt.Println(my.FriendlyTime(d))
 	fmt.Println(my.Now())
 
