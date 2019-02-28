@@ -1,6 +1,9 @@
 package my
 
-import "unicode/utf8"
+import (
+	"strings"
+	"unicode/utf8"
+)
 
 // IsEmpty ...
 func IsEmpty(s string) bool {
@@ -63,4 +66,9 @@ func Len(s string) int {
 		return 0
 	}
 	return utf8.RuneCountInString(s)
+}
+
+// Space returns a string consisting of the specified number of spaces.
+func Space(count int) string {
+	return strings.Repeat(" ", count)
 }

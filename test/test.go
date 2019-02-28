@@ -24,7 +24,7 @@ func main() {
 	*/
 	d := my.CDate("2019-02-01 14:40:00")
 	fmt.Println(my.FriendlyTime(d))
-	fmt.Println(my.Now())
+	fmt.Println(my.Space(10) + my.Now())
 
 	//testget()
 
