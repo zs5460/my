@@ -8,7 +8,7 @@ func IsEmpty(s string) bool {
 }
 
 // Left returns a specified number of characters from the left side of a string.
-func Left(s string, n int) (ret string) {
+func Left(s string, n int) string {
 	if n < 1 {
 		return ""
 	}
@@ -17,12 +17,12 @@ func Left(s string, n int) (ret string) {
 		return s
 	}
 
-	ret = string(runes[:n])
-	return
+	return string(runes[:n])
+
 }
 
 // Right returns a specified number of characters from the right side of a string.
-func Right(s string, n int) (ret string) {
+func Right(s string, n int) string {
 	runes := []rune(s)
 	if n < 1 {
 		return ""
@@ -31,12 +31,11 @@ func Right(s string, n int) (ret string) {
 		return s
 	}
 
-	ret = string(runes[len(runes)-n:])
-	return
+	return string(runes[len(runes)-n:])
 }
 
 // Mid returns a specified number of characters from a string.
-func Mid(s string, start, length int) (ret string) {
+func Mid(s string, start, length int) string {
 	if start < 0 {
 		start = 0
 	}

@@ -5,7 +5,7 @@ import (
 )
 
 // Test provides some common regular expression detection features.
-func Test(str, pattern string) (ret bool) {
+func Test(str, pattern string) bool {
 	var pa string
 	switch pattern {
 	case "idcard":

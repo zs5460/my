@@ -1,7 +1,6 @@
 package my
 
 import (
-	"strings"
 	"testing"
 )
 
@@ -130,12 +129,5 @@ func TestLen(t *testing.T) {
 				got,
 				test.want)
 		}
-	}
-}
-
-func BenchmarkLen(b *testing.B) {
-	s := strings.Repeat("中华人民共和国", 10000)
-	for i := 0; i < b.N; i++ {
-		_ = Len(s)
 	}
 }

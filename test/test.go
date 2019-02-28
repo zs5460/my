@@ -26,5 +26,12 @@ func main() {
 	fmt.Println(my.FriendlyTime(d))
 	fmt.Println(my.Now())
 
+	//testget()
+
 	fmt.Println("done!")
+}
+
+func testget() {
+	s, _ := my.GetURL("http://www.bing.com")
+	fmt.Printf("%s\n", s)
 }
