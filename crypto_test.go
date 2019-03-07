@@ -29,6 +29,12 @@ func TestHMACSHA1(t *testing.T) {
 	}
 }
 
+func TestHMACSHA256(t *testing.T) {
+	if HMACSHA256("zs5460", "123456") != "9b3900854cd8bb04e1c52de5ddfca7cde6b8e8179d16ef7d660b056d03e3609f" {
+		t.Error("HMAC_SHA256 value is wrong")
+	}
+}
+
 func BenchmarkHMACSHA1(b *testing.B) {
 	s := strings.Repeat("hello", 1000)
 	for i := 0; i < b.N; i++ {

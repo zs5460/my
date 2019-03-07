@@ -35,8 +35,16 @@ func SHA256(s string) string {
 }
 
 // HMACSHA1 generate a keyed hash value using the HMAC method.
-func HMACSHA1(s string, key string) string {
+func HMACSHA1(s, key string) string {
 	var hashFunc = sha1.New
+	h := hmac.New(hashFunc, []byte(key))
+	h.Write([]byte(s))
+	return hex.EncodeToString(h.Sum(nil))
+}
+
+// HMACSHA256 ...
+func HMACSHA256(s, key string) string {
+	var hashFunc = sha256.New
 	h := hmac.New(hashFunc, []byte(key))
 	h.Write([]byte(s))
 	return hex.EncodeToString(h.Sum(nil))
