@@ -43,7 +43,7 @@ func PostURL(url string, params string) (reply []byte, err error) {
 	return
 }
 
-// DownloadFile ...
+// DownloadFile .....
 func DownloadFile(url, filepath string) error {
 	cli := &http.Client{}
 	resp, err := cli.Get(url)
