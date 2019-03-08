@@ -12,6 +12,15 @@ func IsExist(path string) bool {
 	return err == nil || os.IsExist(err)
 }
 
+// MakeDir ...
+func MakeDir(dir string) error {
+	if !IsExist(dir) {
+		err := os.MkdirAll(dir, os.ModePerm)
+		return err
+	}
+	return nil
+}
+
 // ReadText ...
 func ReadText(filepath string) (text string, err error) {
 	b, err := ioutil.ReadFile(filepath)
