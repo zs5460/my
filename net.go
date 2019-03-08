@@ -42,3 +42,16 @@ func PostURL(url string, params string) (reply []byte, err error) {
 	reply, err = ioutil.ReadAll(resp.Body)
 	return
 }
+
+// DownloadFile ...
+func DownloadFile(url, filepath string) error {
+	cli := &http.Client{}
+	resp, err := cli.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	return ioutil.WriteFile(filepath, data, 0666)
+
+}
