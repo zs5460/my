@@ -4,14 +4,15 @@ import "fmt"
 
 func ExampleGetJSON() {
 	type Result struct {
-		code    int
-		message string
-		data    []interface{}
+		Code    int           `json:"code"`
+		Message string        `json:"message"`
+		Data    []interface{} `json:"data"`
+		Total   int           `json:"total"`
 	}
 	var ret Result
 	err := GetJSON("http://abc.com/api/.../", &ret)
 	if err != nil {
 		return
 	}
-	fmt.Println(ret.code)
+	fmt.Println(ret.Code)
 }
