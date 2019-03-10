@@ -1,6 +1,7 @@
 package my
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -24,6 +25,27 @@ func GetURL(url string) (reply []byte, err error) {
 	defer resp.Body.Close()
 	reply, err = ioutil.ReadAll(resp.Body)
 	return
+}
+
+// GetJSON ...
+func GetJSON(url string, v interface{}) error {
+	cli := &http.Client{
+		Timeout: RequestTimeout * time.Second,
+	}
+	resp, err := cli.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	reply, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(reply, v)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // PostURL ...
