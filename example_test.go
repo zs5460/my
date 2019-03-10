@@ -1,6 +1,10 @@
-package my
+package my_test
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/zs5460/my"
+)
 
 func ExampleGetJSON() {
 	type Result struct {
@@ -10,7 +14,7 @@ func ExampleGetJSON() {
 		Total   int           `json:"total"`
 	}
 	var ret Result
-	err := GetJSON("http://abc.com/api/.../", &ret)
+	err := my.GetJSON("http://abc.com/api/.../", &ret)
 	if err != nil {
 		return
 	}
