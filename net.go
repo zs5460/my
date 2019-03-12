@@ -73,7 +73,12 @@ func DownloadFile(url, filepath string) error {
 		return err
 	}
 	defer resp.Body.Close()
+
 	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
 	return ioutil.WriteFile(filepath, data, 0666)
 
 }
