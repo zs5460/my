@@ -9,11 +9,11 @@ import (
 )
 
 var (
-	// RequestTimeout ...
+	// RequestTimeout set the maximum time for a request.
 	RequestTimeout time.Duration = 10
 )
 
-// GetURL ...
+// GetURL request a url.
 func GetURL(url string) (reply []byte, err error) {
 	cli := &http.Client{
 		Timeout: RequestTimeout * time.Second,
@@ -27,7 +27,7 @@ func GetURL(url string) (reply []byte, err error) {
 	return
 }
 
-// GetJSON ...
+// GetJSON get json from a url and unmarshal to a struct.
 func GetJSON(url string, v interface{}) error {
 	cli := &http.Client{
 		Timeout: RequestTimeout * time.Second,
@@ -48,7 +48,7 @@ func GetJSON(url string, v interface{}) error {
 	return nil
 }
 
-// PostURL ...
+// PostURL request a url with POST method.
 // params is a string like k1=v1&k2=v2
 func PostURL(url string, params string) (reply []byte, err error) {
 	cli := &http.Client{
@@ -65,7 +65,7 @@ func PostURL(url string, params string) (reply []byte, err error) {
 	return
 }
 
-// DownloadFile .....
+// DownloadFile download a file from a url.
 func DownloadFile(url, filepath string) error {
 	cli := &http.Client{}
 	resp, err := cli.Get(url)
