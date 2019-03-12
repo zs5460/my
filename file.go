@@ -12,7 +12,7 @@ func IsExist(path string) bool {
 	return err == nil || os.IsExist(err)
 }
 
-// MakeDir ...
+// MakeDir creates a folder.
 func MakeDir(dir string) error {
 	if !IsExist(dir) {
 		err := os.MkdirAll(dir, os.ModePerm)
@@ -21,7 +21,7 @@ func MakeDir(dir string) error {
 	return nil
 }
 
-// ReadText ...
+// ReadText reads an entire text file and returns the resulting string.
 func ReadText(filepath string) (text string, err error) {
 	b, err := ioutil.ReadFile(filepath)
 	if err != nil {
@@ -31,13 +31,13 @@ func ReadText(filepath string) (text string, err error) {
 	return
 }
 
-// WriteText ...
+// WriteText writes a specified string to a text file.
 func WriteText(filepath string, text string) (err error) {
 	//return ioutil.WriteFile(filepath, []byte(text), 0644)
 	return writeText(filepath, text, false)
 }
 
-// AppendText ...
+// AppendText append a string to a text file.
 func AppendText(filepath string, text string) (err error) {
 	return writeText(filepath, text, true)
 }

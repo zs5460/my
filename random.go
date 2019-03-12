@@ -9,22 +9,22 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// RndNumber ...
+// RndNumber Returns a string of numbers of the specified length.
 func RndNumber(n int) string {
 	return genRandom(n, 0)
 }
 
-// RndAlpha ...
+// RndAlpha Returns a string of letters of the specified length.
 func RndAlpha(n int) string {
 	return genRandom(n, 1)
 }
 
-// RndString ...
+// RndString Returns a random string of the specified length.
 func RndString(n int) string {
 	return genRandom(n, 2)
 }
 
-// RndFilename ...
+// RndFilename Returns a file name consisting of a time and a random string.
 func RndFilename(ext string) string {
 	if Left(ext, 1) != "." {
 		ext = "." + ext

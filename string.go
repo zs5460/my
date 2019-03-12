@@ -5,11 +5,6 @@ import (
 	"unicode/utf8"
 )
 
-// IsEmpty ...
-func IsEmpty(s string) bool {
-	return len(s) == 0
-}
-
 // Left returns a specified number of characters from the left side of a string.
 func Left(s string, n int) string {
 	if n < 1 {

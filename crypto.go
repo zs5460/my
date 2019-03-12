@@ -42,7 +42,7 @@ func HMACSHA1(s, key string) string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
-// HMACSHA256 ...
+// HMACSHA256 generate a keyed hash value using the HMAC method.
 func HMACSHA256(s, key string) string {
 	var hashFunc = sha256.New
 	h := hmac.New(hashFunc, []byte(key))
