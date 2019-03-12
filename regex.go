@@ -18,14 +18,6 @@ func Test(str, pattern string) bool {
 		pa = `^[a-z][a-z0-9]{4,19}$`
 	case "email":
 		pa = `^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$`
-	case "int":
-		pa = `^[-\+]?\d+$`
-	case "number":
-		pa = `^\d+$`
-	case "double":
-		pa = `^[-\+]?\d+(\.\d+)?$`
-	case "price":
-		pa = `^\d+(\.\d+)?$`
 	case "zip":
 		pa = `^[1-9]\d{5}$`
 	case "qq":
