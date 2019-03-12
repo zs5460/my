@@ -24,9 +24,6 @@ func TestTest(t *testing.T) {
 		{"zs5460.gmail.com", "email", false},
 		{"zs5460@gmail.com.cn", "email", true},
 
-		{"1234", "number", true},
-		{"zs5460", "number", false},
-
 		{"Zs123456", "password", true},
 		{"zs5460", "password", false},
 		{"Zs5460", "password", false},
