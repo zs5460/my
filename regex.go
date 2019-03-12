@@ -33,11 +33,15 @@ func Test(str, pattern string) bool {
 	case "ip":
 		pa = `^\d+\.\d+\.\d+\.\d+$`
 	case "password":
-		return Test(str, "[A-Z]") && Test(str, "[a-z]") && Test(str, "[0-9]") && len(str) >= 8
+		return isStrongPassword(str)
 	default:
 		pa = pattern
 	}
 	reg := regexp.MustCompile(pa)
 
 	return reg.MatchString(str)
+}
+
+func isStrongPassword(s string) bool {
+	return Test(s, "[A-Z]") && Test(s, "[a-z]") && Test(s, "[0-9]") && len(s) >= 8
 }
