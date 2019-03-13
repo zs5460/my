@@ -2,8 +2,10 @@ package my
 
 import (
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
@@ -66,19 +68,20 @@ func PostURL(url string, params string) (reply []byte, err error) {
 }
 
 // DownloadFile download a file from a url.
-func DownloadFile(url, filepath string) error {
+func DownloadFile(url, filepath string) (err error) {
 	cli := &http.Client{}
 	resp, err := cli.Get(url)
 	if err != nil {
-		return err
+		return
 	}
 	defer resp.Body.Close()
 
-	data, err := ioutil.ReadAll(resp.Body)
+	file, err := os.Create(filepath)
 	if err != nil {
-		return err
+		return
 	}
+	defer file.Close()
 
-	return ioutil.WriteFile(filepath, data, 0666)
-
+	_, err = io.Copy(file, resp.Body)
+	return
 }
