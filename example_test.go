@@ -2,6 +2,7 @@ package my_test
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/zs5460/my"
 )
@@ -42,4 +43,19 @@ func ExamplePostURL() {
 	// Output:
 	// name:zs
 	// age:20
+}
+
+func ExampleFormatDateTime() {
+	birthday := time.Date(1982, time.February, 11, 20, 13, 14, 0, time.Local)
+	fmt.Println(my.FormatDateTime(birthday, 0))
+	fmt.Println(my.FormatDateTime(birthday, 1))
+	fmt.Println(my.FormatDateTime(birthday, 2))
+	fmt.Println(my.FormatDateTime(birthday, 3))
+	fmt.Println(my.FormatDateTime(birthday, 4))
+	// Output:
+	// 1982-02-11 20:13:14
+	// 1982-02-11
+	// 02-11
+	// 20:13:14
+	// 20:13
 }
