@@ -6,15 +6,27 @@ import (
 	"os"
 )
 
-// IsExist checks whether a file or directory exists.
-func IsExist(path string) bool {
-	_, err := os.Stat(path)
-	return err == nil || os.IsExist(err)
+// FolderExist returns true if a specified folder exists; false if it does not.
+func FolderExist(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil || !info.IsDir() {
+		return false
+	}
+	return true
+}
+
+// FileExist returns true if a specified file exists; false if it does not.
+func FileExist(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return !info.IsDir()
 }
 
 // MakeDir creates a folder.
 func MakeDir(dir string) error {
-	if !IsExist(dir) {
+	if !FolderExist(dir) {
 		err := os.MkdirAll(dir, os.ModePerm)
 		return err
 	}
