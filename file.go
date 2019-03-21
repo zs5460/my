@@ -4,7 +4,14 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
+
+// AppPath returns an absolute path of app.
+func AppPath() string {
+	dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	return dir
+}
 
 // FolderExist returns true if a specified folder exists; false if it does not.
 func FolderExist(path string) bool {
