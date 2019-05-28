@@ -59,3 +59,31 @@ func ExampleFormatDateTime() {
 	// 20:13:14
 	// 20:13
 }
+
+func ExampleLoadJSONConfig() {
+	type config struct {
+		AppName string
+		Version string
+	}
+	var c config
+	my.LoadJSONConfig("testdata/config.json", &c)
+	fmt.Println(c.AppName)
+	fmt.Println(c.Version)
+	// Output:
+	// DEMO
+	// 1.0.0
+}
+
+func ExampleLoadXMLConfig() {
+	type config struct {
+		AppName string `xml:"appname"`
+		Version string `xml:"version"`
+	}
+	var c config
+	my.LoadXMLConfig("testdata/config.xml", &c)
+	fmt.Println(c.AppName)
+	fmt.Println(c.Version)
+	// Output:
+	// DEMO
+	// 1.0.0
+}
