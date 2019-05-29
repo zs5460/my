@@ -87,3 +87,62 @@ func ExampleLoadXMLConfig() {
 	// DEMO
 	// 1.0.0
 }
+
+func ExampleIsEmpty() {
+	var s string
+	fmt.Println(my.IsEmpty(s))
+	s = "zs5460"
+	fmt.Println(my.IsEmpty(s))
+	// Output:
+	// true
+	// false
+}
+
+func ExampleLeft() {
+	s := "zs5460"
+	fmt.Println(my.Left(s, 2))
+	s = "公元2000年"
+	fmt.Println(my.Left(s, 5))
+	// Output:
+	// zs
+	// 公元200
+}
+
+func ExampleRight() {
+	s := "zs5460"
+	fmt.Println(my.Right(s, 2))
+	s = "公元2000年"
+	fmt.Println(my.Right(s, 5))
+	// Output:
+	// 60
+	// 2000年
+}
+
+func ExampleMid() {
+	s := "zs5460"
+	fmt.Println(my.Mid(s, 2, 2))
+	s = "公元2000年"
+	fmt.Println(my.Mid(s, 2, 4))
+	// Output:
+	// 54
+	// 2000
+}
+
+func ExampleLen() {
+	s := "zs5460"
+	fmt.Println(my.Len(s))
+	s = "公元2000年"
+	fmt.Println(my.Len(s))
+	// Output:
+	// 6
+	// 7
+}
+
+func ExampleSpace() {
+	s := "a" + my.Space(5) + "b"
+	fmt.Println(s)
+	fmt.Println("1234567")
+	// Output:
+	// a     b
+	// 1234567
+}
