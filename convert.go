@@ -42,3 +42,13 @@ func str2bytes(s string) []byte {
 func bytes2str(b []byte) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
+
+// BytesToString Convert a byte slice to a string.
+func BytesToString(b []byte) string {
+	return bytes2str(b)
+}
+
+// StringToBytes Convert a string to a byte slice.
+func StringToBytes(s string) []byte {
+	return str2bytes(s)
+}
