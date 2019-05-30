@@ -9,13 +9,46 @@ import (
 	"github.com/zs5460/my"
 )
 
+func ExampleLoadJSONConfig() {
+	type config struct {
+		AppName string
+		Version string
+	}
+	var c config
+	err := my.LoadJSONConfig("testdata/config.json", &c)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(c.AppName)
+	fmt.Println(c.Version)
+	// Output:
+	// DEMO
+	// 1.0.0
+}
 func ExampleLoadXMLConfig() {
 	type config struct {
 		AppName string `xml:"appname"`
 		Version string `xml:"version"`
 	}
 	var c config
-	my.LoadXMLConfig("testdata/config.xml", &c)
+	err := my.LoadXMLConfig("testdata/config.xml", &c)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(c.AppName)
+	fmt.Println(c.Version)
+	// Output:
+	// DEMO
+	// 1.0.0
+}
+
+func ExampleMustLoadConfig() {
+	type config struct {
+		AppName string `xml:"appname"`
+		Version string `xml:"version"`
+	}
+	var c config
+	my.MustLoadConfig("testdata/config.xml", &c)
 	fmt.Println(c.AppName)
 	fmt.Println(c.Version)
 	// Output:
@@ -97,20 +130,6 @@ func ExampleFormatDateTime() {
 	// 02-11
 	// 20:13:14
 	// 20:13
-}
-
-func ExampleLoadJSONConfig() {
-	type config struct {
-		AppName string
-		Version string
-	}
-	var c config
-	my.LoadJSONConfig("testdata/config.json", &c)
-	fmt.Println(c.AppName)
-	fmt.Println(c.Version)
-	// Output:
-	// DEMO
-	// 1.0.0
 }
 
 func ExampleLeft() {
