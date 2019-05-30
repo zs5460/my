@@ -198,3 +198,19 @@ func ExampleTest() {
 	// false
 	// true
 }
+
+func ExampleFileExist() {
+	fmt.Println(my.FileExist("testdata/config.json"))
+	fmt.Println(my.FileExist("testdata/notexist.txt"))
+	// Output:
+	// true
+	// false
+}
+
+func ExampleFolderExist() {
+	fmt.Println(my.FolderExist("testdata"))
+	fmt.Println(my.FolderExist("testdata2"))
+	// Output:
+	// true
+	// false
+}
