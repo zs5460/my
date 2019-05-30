@@ -33,3 +33,23 @@ func TestRndFilename(t *testing.T) {
 		t.Error("RndFilename failed.")
 	}
 }
+
+func TestGenRandom(t *testing.T) {
+	var tests = []struct {
+		n        int
+		charType int
+		reg      string
+	}{
+		{6, 0, `^\d{6}$`},
+		{6, 1, `^[a-z]{6}$`},
+		{6, 2, `^[0-9a-z]{6}$`},
+		{6, 3, `^[a-z]{6}$`},
+		{60, 0, `^\d{32}$`},
+	}
+
+	for _, test := range tests {
+		if got := genRandom(test.n, test.charType); !Test(got, test.reg) {
+			t.Errorf("genRandom(%d,%d) failed", test.n, test.charType)
+		}
+	}
+}
