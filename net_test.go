@@ -7,16 +7,15 @@ import (
 
 func TestGetURL(t *testing.T) {
 	url := "https://www.nothissite.com/"
-	c, err := GetURL(url)
+	_, err := GetURL(url)
 	if err == nil {
 		t.Fatalf("GetURL %s: error expected, none found", url)
 	}
 	url = "https://www.google.cn/"
-	c, err = GetURL(url)
+	_, err = GetURL(url)
 	if err != nil {
 		t.Fatalf("GetURL %s: %v", url, err)
 	}
-	t.Log(len(c))
 }
 
 func TestGetJSON(t *testing.T) {
@@ -55,12 +54,12 @@ func TestGetJSON(t *testing.T) {
 
 func TestPostURL(t *testing.T) {
 	url := "https://www.nothissite.com/"
-	c, err := PostURL(url, "q=test")
+	_, err := PostURL(url, "q=test")
 	if err == nil {
 		t.Fatalf("GetJSON %s: error expected, none found", url)
 	}
 	url = "http://54600.net/demo/post/"
-	c, err = PostURL(url, "name=zs")
+	c, err := PostURL(url, "name=zs")
 	if err != nil {
 		t.Fatalf("PostURL %s: %v", url, err)
 	}
