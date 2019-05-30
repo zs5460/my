@@ -80,7 +80,7 @@ func TestDownloadFile(t *testing.T) {
 	}
 
 	url = "http://54600.net/demo/file/demo.txt"
-	localfile = "demo:"
+	localfile = "thisdirnotexist/demo"
 	err = DownloadFile(url, localfile) // create file error
 	if err == nil {
 		t.Fatalf("DownloadFile %s: error expected, none found", url)
