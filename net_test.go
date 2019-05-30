@@ -6,7 +6,6 @@ import (
 )
 
 func TestGetURL(t *testing.T) {
-	RequestTimeout = 2
 	url := "https://www.nothissite.com/"
 	c, err := GetURL(url)
 	if err == nil {
@@ -17,7 +16,7 @@ func TestGetURL(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetURL %s: %v", url, err)
 	}
-	t.Log(c)
+	t.Log(len(c))
 }
 
 func TestGetJSON(t *testing.T) {
@@ -29,7 +28,6 @@ func TestGetJSON(t *testing.T) {
 		Total   int           `json:"total"`
 	}
 
-	RequestTimeout = 2
 	var v = &result{}
 	url := "https://www.nothissite.com/"
 	err := GetJSON(url, &v)
@@ -98,5 +96,4 @@ func TestDownloadFile(t *testing.T) {
 	}
 
 	os.Remove(localfile) // clean up
-
 }
