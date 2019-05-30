@@ -9,7 +9,7 @@ func Test(str, pattern string) bool {
 	var pa string
 	switch pattern {
 	case "idcard":
-		pa = `^\d{15}$)|(\d{17}(?:\d|x|X)$`
+		pa = `(^\d{15}$)|(^\d{17}(\d|x|X)$)`
 	case "english":
 		pa = "^[A-Za-z]+$"
 	case "chinese":
@@ -27,9 +27,7 @@ func Test(str, pattern string) bool {
 	case "mobile":
 		pa = `^(13[0-9]|14[5|7]|15[0-9]|18[0-9]|199)\d{8}$`
 	case "url":
-		pa = `^(http|https|ftp):\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~\@[\\]\':+!]*([^<>\"])*$`
-	case "domain":
-		pa = `^[A-Za-z0-9\-]+\.([A-Za-z]{2,4}|[A-Za-z]{2,4}\.[A-Za-z]{2})$`
+		pa = `^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-.,@?^=%&:\/~+#]*[\w\-@?^=%&\/~+#])?$`
 	case "ip":
 		pa = `^\d+\.\d+\.\d+\.\d+$`
 	case "password":
