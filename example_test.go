@@ -56,6 +56,19 @@ func ExampleMustLoadConfig() {
 	// 1.0.0
 }
 
+func ExampleCDate() {
+	fmt.Println(my.CDate("1982-2-11 20:13:14"))
+	fmt.Println(my.CDate("1982-02-11 20:13:14"))
+	fmt.Println(my.CDate("1982-02-11"))
+	fmt.Println(my.CDate("82-02-11")) //unsupport
+
+	// Output:
+	// 1982-02-11 20:13:14 +0800 CST
+	// 1982-02-11 20:13:14 +0800 CST
+	// 1982-02-11 00:00:00 +0800 CST
+	// 1900-01-01 00:00:00 +0800 CST
+}
+
 func ExampleIsEmpty() {
 	var s string
 	fmt.Println(my.IsEmpty(s))
@@ -230,4 +243,14 @@ func ExampleFolderExist() {
 	// Output:
 	// true
 	// false
+}
+
+func ExampleAppPath() {
+	dir := my.AppPath()
+	// dir is your app startup dir
+	dir = "c:\\myapp"
+	fmt.Println(dir)
+
+	// Output:
+	// c:\myapp
 }
