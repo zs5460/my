@@ -57,16 +57,16 @@ func ExampleMustLoadConfig() {
 }
 
 func ExampleCDate() {
-	fmt.Println(my.CDate("1982-2-11 20:13:14"))
-	fmt.Println(my.CDate("1982-02-11 20:13:14"))
-	fmt.Println(my.CDate("1982-02-11"))
-	fmt.Println(my.CDate("82-02-11")) //unsupport
+	fmt.Println(my.CDate("1982-2-11 20:13:14").Format("2006-01-02 15:04:05"))
+	fmt.Println(my.CDate("1982-02-11 20:13:14").Format("2006-01-02 15:04:05"))
+	fmt.Println(my.CDate("1982-02-11").Format("2006-01-02 15:04:05"))
+	fmt.Println(my.CDate("82-02-11").Format("2006-01-02 15:04:05")) //unsupport
 
 	// Output:
-	// 1982-02-11 20:13:14 +0800 CST
-	// 1982-02-11 20:13:14 +0800 CST
-	// 1982-02-11 00:00:00 +0800 CST
-	// 1900-01-01 00:00:00 +0800 CST
+	// 1982-02-11 20:13:14
+	// 1982-02-11 20:13:14
+	// 1982-02-11 00:00:00
+	// 1900-01-01 00:00:00
 }
 
 func ExampleIsEmpty() {
