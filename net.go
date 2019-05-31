@@ -39,15 +39,8 @@ func GetJSON(url string, v interface{}) error {
 		return err
 	}
 	defer resp.Body.Close()
-	reply, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(reply, v)
-	if err != nil {
-		return err
-	}
-	return nil
+	reply, _ := ioutil.ReadAll(resp.Body)
+	return json.Unmarshal(reply, v)
 }
 
 // PostURL request a url with POST method.
