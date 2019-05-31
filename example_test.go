@@ -248,9 +248,9 @@ func ExampleFolderExist() {
 func ExampleAppPath() {
 	dir := my.AppPath()
 	// dir is your app startup dir
-	dir = "c:\\myapp"
+	dir = "c:\\fakeapp"
 	fmt.Println(dir)
 
 	// Output:
-	// c:\myapp
+	// c:\fakeapp
 }
