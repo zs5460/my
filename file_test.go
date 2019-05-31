@@ -39,6 +39,10 @@ func TestMakeDir(t *testing.T) {
 }
 
 func TestReadText(t *testing.T) {
+	_, err := ReadText("testdata/hello2")
+	if err == nil {
+		t.Errorf("ReadText did not work properly")
+	}
 	c, err := ReadText("testdata/hello")
 	if err != nil {
 		t.Fatal(err)
@@ -49,9 +53,13 @@ func TestReadText(t *testing.T) {
 }
 
 func TestWriteText(t *testing.T) {
+	err := WriteText("testdata2/w.txt", "OK")
+	if err == nil {
+		t.Errorf("WriteText did not work properly")
+	}
 	fn := "testdata/w.txt"
 	text := "this is a test"
-	err := WriteText(fn, text)
+	err = WriteText(fn, text)
 	if err != nil {
 		t.Fatal(err)
 	}
