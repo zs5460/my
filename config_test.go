@@ -1,6 +1,7 @@
 package my_test
 
 import (
+	"fmt"
 	"testing"
 
 	. "github.com/zs5460/my"
@@ -49,4 +50,28 @@ func TestLoadXMLConfig(t *testing.T) {
 		t.Error("load xml config failed!")
 	}
 
+}
+
+func TestMustLoadConfig_1(t *testing.T) {
+	defer func() {
+		if err := recover(); err != nil {
+			t.Log(fmt.Sprintf("panic recover\n %v", err))
+		}
+	}()
+
+	var c config
+	cfg := "testdata/config.yml"
+	MustLoadConfig(cfg, &c)
+}
+
+func TestMustLoadConfig_2(t *testing.T) {
+	defer func() {
+		if err := recover(); err != nil {
+			t.Log(fmt.Sprintf("panic recover\n %v", err))
+		}
+	}()
+
+	var c config
+	cfg := "testdata/error_config.json"
+	MustLoadConfig(cfg, &c)
 }
