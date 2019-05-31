@@ -53,3 +53,8 @@ func genRandom(n, charType int) string {
 	}
 	return string(result)
 }
+
+// GenRandom ...
+func GenRandom(n, charType int) string {
+	return genRandom(n, charType)
+}

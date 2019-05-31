@@ -210,6 +210,7 @@ func ExampleFileExist() {
 func ExampleFolderExist() {
 	fmt.Println(my.FolderExist("testdata"))
 	fmt.Println(my.FolderExist("testdata2"))
+
 	// Output:
 	// true
 	// false

@@ -1,6 +1,10 @@
-package my
+package my_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/zs5460/my"
+)
 
 func TestRndNumber(t *testing.T) {
 	s := RndNumber(6)
@@ -48,8 +52,8 @@ func TestGenRandom(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		if got := genRandom(test.n, test.charType); !Test(got, test.reg) {
-			t.Errorf("genRandom(%d,%d) failed", test.n, test.charType)
+		if got := GenRandom(test.n, test.charType); !Test(got, test.reg) {
+			t.Errorf("GenRandom(%d,%d) failed", test.n, test.charType)
 		}
 	}
 }

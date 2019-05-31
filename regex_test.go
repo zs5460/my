@@ -1,7 +1,9 @@
-package my
+package my_test
 
 import (
 	"testing"
+
+	. "github.com/zs5460/my"	
 )
 
 func TestTest(t *testing.T) {

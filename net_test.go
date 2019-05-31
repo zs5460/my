@@ -1,8 +1,10 @@
-package my
+package my_test
 
 import (
 	"os"
 	"testing"
+
+	. "github.com/zs5460/my"
 )
 
 func TestGetURL(t *testing.T) {
@@ -63,7 +65,7 @@ func TestPostURL(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostURL %s: %v", url, err)
 	}
-	if bytes2str(c) != "name:zs\n" {
+	if BytesToString(c) != "name:zs\n" {
 		t.Fatalf("body = %q\nexpected = %q", c, "name:zs\n")
 	}
 }
