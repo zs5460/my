@@ -7,6 +7,9 @@ import (
 	. "github.com/zs5460/my"
 )
 
+func init() {
+	RequestTimeout = 10
+}
 func TestGetURL(t *testing.T) {
 	url := "https://www.nothissite.com/"
 	_, err := GetURL(url)
