@@ -15,4 +15,4 @@ go get -u github.com/zs5460/my
 
 ## License
 
-Licensed under The BSD-2-Clause License
+Licensed under The MIT License
