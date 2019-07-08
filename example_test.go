@@ -79,57 +79,6 @@ func ExampleIsEmpty() {
 	// false
 }
 
-func ExampleGetURL() {
-	s, err := my.GetURL("http://54600.net/demo/ping")
-	if err != nil {
-		return
-	}
-	fmt.Println(string(s))
-	// Output:
-	// PONG
-}
-
-func ExampleGetJSON() {
-	type Result struct {
-		Code    int           `json:"code"`
-		Message string        `json:"message"`
-		Data    []interface{} `json:"data"`
-		Total   int           `json:"total"`
-	}
-	var ret Result
-	err := my.GetJSON("http://54600.net/demo/json/", &ret)
-	if err != nil {
-		return
-	}
-	fmt.Println(ret.Code)
-	// Output:
-	// 0
-}
-
-func ExamplePostURL() {
-	s, err := my.PostURL("http://54600.net/demo/post/", "name=zs&age=20")
-	if err != nil {
-		return
-	}
-	fmt.Println(string(s))
-	// Output:
-	// name:zs
-	// age:20
-}
-
-func ExampleDownloadFile() {
-	source := "https://avatars3.githubusercontent.com/u/1711957"
-	localfile := "testdata/avatar.jpg"
-	err := my.DownloadFile(source, localfile)
-	if err != nil {
-		log.Println(err)
-	}
-	os.Remove(localfile) //clean up
-	fmt.Println("OK")
-	// Output:
-	// OK
-}
-
 func ExampleFormatDateTime() {
 	birthday := time.Date(1982, time.February, 11, 20, 13, 14, 0, time.Local)
 	fmt.Println(my.FormatDateTime(birthday, 0))
@@ -253,4 +202,61 @@ func ExampleAppPath() {
 
 	// Output:
 	// c:\fakeapp
+}
+
+func ExampleGetURL() {
+	ms := mockServer()
+	defer ms.Close()
+	s, err := my.GetURL(ms.URL + "/ping")
+	if err != nil {
+		return
+	}
+	fmt.Println(string(s))
+	// Output:
+	// PONG
+}
+
+func ExampleGetJSON() {
+	ms := mockServer()
+	defer ms.Close()
+	type Result struct {
+		Code    int           `json:"code"`
+		Message string        `json:"message"`
+		Data    []interface{} `json:"data"`
+		Total   int           `json:"total"`
+	}
+	var ret Result
+	err := my.GetJSON(ms.URL+"/json", &ret)
+	if err != nil {
+		return
+	}
+	fmt.Println(ret.Code)
+	// Output:
+	// 0
+}
+
+func ExamplePostURL() {
+	ms := mockServer()
+	defer ms.Close()
+	s, err := my.PostURL(ms.URL+"/post", "name=zs")
+	if err != nil {
+		return
+	}
+	fmt.Println(string(s))
+	// Output:
+	// name:zs
+}
+
+func ExampleDownloadFile() {
+	ms := mockServer()
+	defer ms.Close()
+	localfile := "testdata/demo.txt"
+	err := my.DownloadFile(ms.URL+"/file.", localfile)
+	if err != nil {
+		log.Println(err)
+	}
+	os.Remove(localfile) //clean up
+	fmt.Println("OK")
+	// Output:
+	// OK
 }

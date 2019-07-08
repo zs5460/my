@@ -1,19 +1,71 @@
 package my_test
 
 import (
+	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 
 	. "github.com/zs5460/my"
 )
 
+func mockServer() *httptest.Server {
+	f := func(w http.ResponseWriter, r *http.Request) {
+		url := r.URL.String()
+
+		switch url {
+		case "/ping":
+			w.Header().Set("content-type", "text/plain")
+			fmt.Fprint(w, "PONG")
+
+		case "/json":
+			w.Header().Set("content-type", "application/json")
+			fmt.Fprint(w, `{"code":0,"message":"ok"}`)
+
+		case "/post":
+			w.Header().Set("content-type", "text/plain")
+			r.ParseForm()
+			for k := range r.PostForm {
+				fmt.Fprint(w, k)
+				fmt.Fprint(w, ":")
+				fmt.Fprint(w, r.PostFormValue(k))
+				fmt.Fprint(w, "\n")
+			}
+
+		case "/file/demo.txt":
+			w.Header().Set("content-type", "text/plain")
+			fmt.Fprint(w, "this is a demo.")
+
+		case "/404":
+			w.WriteHeader(http.StatusNotFound)
+
+		case "/500":
+			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+			w.Header().Set("X-Content-Type-Options", "nosniff")
+			w.WriteHeader(500)
+			fmt.Fprintln(w, "internal server error")
+
+		default:
+			w.Header().Set("content-type", "text/plain")
+			fmt.Fprint(w, "hello")
+		}
+
+	}
+
+	return httptest.NewServer(http.HandlerFunc(f))
+}
+
 func TestGetURL(t *testing.T) {
+	ms := mockServer()
+	defer ms.Close()
+
 	url := "https://www.nothissite.com/"
 	_, err := GetURL(url)
 	if err == nil {
 		t.Fatalf("GetURL %s: error expected, none found", url)
 	}
-	url = "https://www.google.cn/"
+	url = ms.URL + "/ping"
 	_, err = GetURL(url)
 	if err != nil {
 		t.Fatalf("GetURL %s: %v", url, err)
@@ -21,6 +73,8 @@ func TestGetURL(t *testing.T) {
 }
 
 func TestGetJSON(t *testing.T) {
+	ms := mockServer()
+	defer ms.Close()
 
 	type result struct {
 		Code    int           `json:"code"`
@@ -36,13 +90,13 @@ func TestGetJSON(t *testing.T) {
 		t.Fatalf("GetJSON %s: error expected, none found", url)
 	}
 
-	url = "https://www.google.cn/"
+	url = ms.URL + "/ping"
 	err = GetJSON(url, &v)
 	if err == nil {
 		t.Fatalf("GetJSON %s: error expected, none found", url)
 	}
 
-	url = "http://54600.net/demo/json/"
+	url = ms.URL + "/json"
 	err = GetJSON(url, v)
 	if err != nil {
 		t.Fatalf("GetJSON %s: %v", url, err)
@@ -55,12 +109,15 @@ func TestGetJSON(t *testing.T) {
 }
 
 func TestPostURL(t *testing.T) {
+	ms := mockServer()
+	defer ms.Close()
+
 	url := "https://www.nothissite.com/"
 	_, err := PostURL(url, "q=test")
 	if err == nil {
 		t.Fatalf("GetJSON %s: error expected, none found", url)
 	}
-	url = "http://54600.net/demo/post/"
+	url = ms.URL + "/post"
 	c, err := PostURL(url, "name=zs")
 	if err != nil {
 		t.Fatalf("PostURL %s: %v", url, err)
@@ -71,6 +128,9 @@ func TestPostURL(t *testing.T) {
 }
 
 func TestDownloadFile(t *testing.T) {
+	ms := mockServer()
+	defer ms.Close()
+
 	url := "https://www.nothissite.com/"
 	localfile := "test.txt"
 	err := DownloadFile(url, localfile)
@@ -78,14 +138,13 @@ func TestDownloadFile(t *testing.T) {
 		t.Fatalf("DownloadFile %s: error expected, none found", url)
 	}
 
-	url = "http://54600.net/demo/file/demo.txt"
+	url = ms.URL + "/file/demo.txt"
 	localfile = "thisdirnotexist/demo"
 	err = DownloadFile(url, localfile) // create file error
 	if err == nil {
 		t.Fatalf("DownloadFile %s: error expected, none found", url)
 	}
 
-	url = "http://54600.net/demo/file/demo.txt"
 	localfile = "testdata/demo.txt"
 	err = DownloadFile(url, localfile)
 	if err != nil {
