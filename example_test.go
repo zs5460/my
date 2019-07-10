@@ -251,7 +251,7 @@ func ExampleDownloadFile() {
 	ms := mockServer()
 	defer ms.Close()
 	localfile := "testdata/demo.txt"
-	err := my.DownloadFile(ms.URL+"/file.", localfile)
+	err := my.DownloadFile(ms.URL+"/file/demo.txt", localfile)
 	if err != nil {
 		log.Println(err)
 	}
