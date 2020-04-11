@@ -60,6 +60,23 @@ func PostURL(url string, params string) (reply []byte, err error) {
 	return
 }
 
+// PostURL request a url with POST method.
+// params is a json string
+func PostJSON(url string, params string) (reply []byte, err error) {
+	cli := &http.Client{
+		Timeout: RequestTimeout * time.Second,
+	}
+	resp, err := cli.Post(url,
+		"application/json;charset=UTF-8",
+		strings.NewReader(params))
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+	reply, err = ioutil.ReadAll(resp.Body)
+	return
+}
+
 // DownloadFile download a file from a url.
 func DownloadFile(url, filepath string) (err error) {
 	cli := &http.Client{}

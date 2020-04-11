@@ -2,6 +2,7 @@ package my_test
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -17,25 +18,30 @@ func mockServer() *httptest.Server {
 		switch url {
 		case "/ping":
 			w.Header().Set("content-type", "text/plain")
-			fmt.Fprint(w, "PONG")
+			_, _ = fmt.Fprint(w, "PONG")
 
 		case "/json":
 			w.Header().Set("content-type", "application/json")
-			fmt.Fprint(w, `{"code":0,"message":"ok"}`)
+			_, _ = fmt.Fprint(w, `{"code":0,"message":"ok"}`)
 
 		case "/post":
 			w.Header().Set("content-type", "text/plain")
-			r.ParseForm()
+			_ = r.ParseForm()
 			for k := range r.PostForm {
-				fmt.Fprint(w, k)
-				fmt.Fprint(w, ":")
-				fmt.Fprint(w, r.PostFormValue(k))
-				fmt.Fprint(w, "\n")
+				_, _ = fmt.Fprint(w, k)
+				_, _ = fmt.Fprint(w, ":")
+				_, _ = fmt.Fprint(w, r.PostFormValue(k))
+				_, _ = fmt.Fprint(w, "\n")
 			}
+
+		case "/postjson":
+			w.Header().Set("content-type", "application/json")
+			body,_ := ioutil.ReadAll(r.Body)
+			_, _ = fmt.Fprint(w, `{"code":0,"data":`,string(body),`}`)
 
 		case "/file/demo.txt":
 			w.Header().Set("content-type", "text/plain")
-			fmt.Fprint(w, "this is a demo.")
+			_, _ = fmt.Fprint(w, "this is a demo.")
 
 		case "/404":
 			w.WriteHeader(http.StatusNotFound)
@@ -44,11 +50,11 @@ func mockServer() *httptest.Server {
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 			w.Header().Set("X-Content-Type-Options", "nosniff")
 			w.WriteHeader(500)
-			fmt.Fprintln(w, "internal server error")
+			_, _ = fmt.Fprintln(w, "internal server error")
 
 		default:
 			w.Header().Set("content-type", "text/plain")
-			fmt.Fprint(w, "hello")
+			_, _ = fmt.Fprint(w, "hello")
 		}
 
 	}
@@ -127,6 +133,21 @@ func TestPostURL(t *testing.T) {
 	}
 }
 
+func TestPostJSON(t *testing.T) {
+	ms := mockServer()
+	defer ms.Close()
+
+	url := ms.URL + "/postjson"
+	c, err := PostJSON(url, `{"name":"zs"}`)
+	if err != nil {
+		t.Fatalf("PostJSON %s: %v", url, err)
+	}
+	if BytesToString(c) != `{"code":0,"data":{"name":"zs"}}` {
+		t.Fatalf("body = %q\nexpected = %q", c, "name:zs\n")
+	}
+}
+
+
 func TestDownloadFile(t *testing.T) {
 	ms := mockServer()
 	defer ms.Close()
@@ -155,5 +176,5 @@ func TestDownloadFile(t *testing.T) {
 		t.Error("DownloadFile failed")
 	}
 
-	os.Remove(localfile) // clean up
+	_ = os.Remove(localfile) // clean up
 }
