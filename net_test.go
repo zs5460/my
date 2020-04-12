@@ -136,8 +136,13 @@ func TestPostURL(t *testing.T) {
 func TestPostJSON(t *testing.T) {
 	ms := mockServer()
 	defer ms.Close()
+	url := "https://www.nothissite.com/"
+	_, err := PostURL(url, `{"name":"zs"}`)
+	if err == nil {
+		t.Fatalf("GetJSON %s: error expected, none found", url)
+	}
 
-	url := ms.URL + "/postjson"
+	url = ms.URL + "/postjson"
 	c, err := PostJSON(url, `{"name":"zs"}`)
 	if err != nil {
 		t.Fatalf("PostJSON %s: %v", url, err)

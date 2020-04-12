@@ -9,6 +9,10 @@ import (
 	"github.com/zs5460/my"
 )
 
+func init(){
+	my.RequestTimeout = 2
+}
+
 func ExampleLoadJSONConfig() {
 	type config struct {
 		AppName string
