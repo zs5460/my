@@ -60,7 +60,7 @@ func PostURL(url string, params string) (reply []byte, err error) {
 	return
 }
 
-// PostURL request a url with POST method.
+// PostJSON request a url with POST method
 // params is a json string
 func PostJSON(url string, params string) (reply []byte, err error) {
 	cli := &http.Client{
