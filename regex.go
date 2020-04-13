@@ -9,7 +9,7 @@ func Test(str, pattern string) bool {
 	var pa string
 	switch pattern {
 	case "idcard":
-		pa = `(^\d{15}$)|(^\d{17}(\d|x|X)$)`
+		pa = `^\d{17}(\d|x|X)$`
 	case "english":
 		pa = "^[A-Za-z]+$"
 	case "chinese":
@@ -41,5 +41,5 @@ func Test(str, pattern string) bool {
 }
 
 func isStrongPassword(s string) bool {
-	return Test(s, "[A-Z]") && Test(s, "[a-z]") && Test(s, "[0-9]") && len(s) >= 8
+	return len(s) >= 8 && Test(s, "[A-Z]") && Test(s, "[a-z]") && Test(s, "[0-9]")
 }

@@ -3,7 +3,7 @@ package my_test
 import (
 	"testing"
 
-	. "github.com/zs5460/my"	
+	. "github.com/zs5460/my"
 )
 
 func TestTest(t *testing.T) {
@@ -12,7 +12,7 @@ func TestTest(t *testing.T) {
 		pattern string
 		want    bool
 	}{
-		{"430001001005001", "idcard", true},
+		{"430001001005001", "idcard", false},
 		{"430001200010050012", "idcard", true},
 		{"43000120001005001x", "idcard", true},
 		{"43000120001005001X", "idcard", true},
