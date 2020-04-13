@@ -40,7 +40,7 @@ func MustLoadConfig(fn string, v interface{}) {
 	configtype := path.Ext(fn)
 	parser, exist := configParser[configtype]
 	if !exist {
-		panic("unsupport config file.")
+		panic("unsupported config file.")
 	}
 	err := parser(fn, v)
 	if err != nil {

@@ -14,7 +14,7 @@ type config struct {
 
 func TestLoadJSONConfig(t *testing.T) {
 	var c config
-	cfg := "testdata/noexist.json"
+	cfg := "testdata/notexist.json"
 	err := LoadJSONConfig(cfg, &c)
 	if err == nil {
 		t.Fatalf("LoadJSONConfig %s: error expected, none found", cfg)
@@ -34,7 +34,7 @@ func TestLoadJSONConfig(t *testing.T) {
 
 func TestLoadXMLConfig(t *testing.T) {
 	var c config
-	cfg := "testdata/noexist.xml"
+	cfg := "testdata/notexist.xml"
 	err := LoadXMLConfig(cfg, &c)
 	if err == nil {
 		t.Fatalf("LoadXMLConfig %s: error expected, none found", cfg)
