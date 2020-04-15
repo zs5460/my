@@ -36,8 +36,8 @@ func mockServer() *httptest.Server {
 
 		case "/postjson":
 			w.Header().Set("content-type", "application/json")
-			body,_ := ioutil.ReadAll(r.Body)
-			_, _ = fmt.Fprint(w, `{"code":0,"data":`,string(body),`}`)
+			body, _ := ioutil.ReadAll(r.Body)
+			_, _ = fmt.Fprint(w, `{"code":0,"data":`, string(body), `}`)
 
 		case "/file/demo.txt":
 			w.Header().Set("content-type", "text/plain")
@@ -121,7 +121,7 @@ func TestPostURL(t *testing.T) {
 	url := "https://www.nothissite.com/"
 	_, err := PostURL(url, "q=test")
 	if err == nil {
-		t.Fatalf("GetJSON %s: error expected, none found", url)
+		t.Fatalf("PostURL %s: error expected, none found", url)
 	}
 	url = ms.URL + "/post"
 	c, err := PostURL(url, "name=zs")
@@ -137,9 +137,9 @@ func TestPostJSON(t *testing.T) {
 	ms := mockServer()
 	defer ms.Close()
 	url := "https://www.nothissite.com/"
-	_, err := PostURL(url, `{"name":"zs"}`)
+	_, err := PostJSON(url, `{"name":"zs"}`)
 	if err == nil {
-		t.Fatalf("GetJSON %s: error expected, none found", url)
+		t.Fatalf("PostJSON %s: error expected, none found", url)
 	}
 
 	url = ms.URL + "/postjson"
@@ -151,7 +151,6 @@ func TestPostJSON(t *testing.T) {
 		t.Fatalf("body = %q\nexpected = %q", c, "name:zs\n")
 	}
 }
-
 
 func TestDownloadFile(t *testing.T) {
 	ms := mockServer()
