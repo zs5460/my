@@ -90,12 +90,15 @@ func ExampleFormatDateTime() {
 	fmt.Println(my.FormatDateTime(birthday, 2))
 	fmt.Println(my.FormatDateTime(birthday, 3))
 	fmt.Println(my.FormatDateTime(birthday, 4))
+	fmt.Println(my.FormatDateTime(birthday, 5))
+
 	// Output:
 	// 1982-02-11 20:13:14
 	// 1982-02-11
 	// 02-11
 	// 20:13:14
 	// 20:13
+	// 1982-02-11 20:13:14
 }
 
 func ExampleFriendlyTime() {
