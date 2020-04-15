@@ -5,10 +5,11 @@ import (
 )
 
 const (
-	myLongDate  = 1
-	myShortDate = 2
-	myLongTime  = 3
-	myShortTime = 4
+	myDateTime = iota
+	myLongDate
+	myShortDate
+	myLongTime
+	myShortTime
 )
 
 // Now returns the current date and time.
@@ -36,6 +37,8 @@ func FriendlyTime(t time.Time) string {
 // FormatDateTime returns an expression formatted as a date or time.
 func FormatDateTime(t time.Time, mode int) string {
 	switch mode {
+	case myDateTime:
+		return t.Format("2006-01-02 15:04:05")
 	case myLongDate:
 		return t.Format("2006-01-02")
 	case myShortDate:

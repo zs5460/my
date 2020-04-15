@@ -9,8 +9,8 @@ import (
 	"github.com/zs5460/my"
 )
 
-func init(){
-	my.RequestTimeout = 2
+func init() {
+	my.RequestTimeout = 1
 }
 
 func ExampleLoadJSONConfig() {
@@ -103,8 +103,8 @@ func ExampleFriendlyTime() {
 	fmt.Println(my.FriendlyTime(time.Now().Add(-2 * time.Minute)))
 	fmt.Println(my.FriendlyTime(time.Now().Add(-2 * time.Hour)))
 	fmt.Println(my.FriendlyTime(time.Now().Add(-2 * 24 * time.Hour)))
-	longlongago, _ := time.Parse("2006-01-02 15:04:05", "1982-02-11 20:13:14")
-	fmt.Println(my.FriendlyTime(longlongago))
+	longLongAgo, _ := time.Parse("2006-01-02 15:04:05", "1982-02-11 20:13:14")
+	fmt.Println(my.FriendlyTime(longLongAgo))
 
 	// Output:
 	// 刚刚
@@ -254,12 +254,12 @@ func ExamplePostURL() {
 func ExampleDownloadFile() {
 	ms := mockServer()
 	defer ms.Close()
-	localfile := "testdata/demo.txt"
-	err := my.DownloadFile(ms.URL+"/file/demo.txt", localfile)
+	localFile := "testdata/demo.txt"
+	err := my.DownloadFile(ms.URL+"/file/demo.txt", localFile)
 	if err != nil {
 		log.Println(err)
 	}
-	os.Remove(localfile) //clean up
+	os.Remove(localFile) //clean up
 	fmt.Println("OK")
 	// Output:
 	// OK

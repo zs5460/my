@@ -18,30 +18,30 @@ func mockServer() *httptest.Server {
 		switch url {
 		case "/ping":
 			w.Header().Set("content-type", "text/plain")
-			_, _ = fmt.Fprint(w, "PONG")
+			fmt.Fprint(w, "PONG")
 
 		case "/json":
 			w.Header().Set("content-type", "application/json")
-			_, _ = fmt.Fprint(w, `{"code":0,"message":"ok"}`)
+			fmt.Fprint(w, `{"code":0,"message":"ok"}`)
 
 		case "/post":
 			w.Header().Set("content-type", "text/plain")
 			_ = r.ParseForm()
 			for k := range r.PostForm {
-				_, _ = fmt.Fprint(w, k)
-				_, _ = fmt.Fprint(w, ":")
-				_, _ = fmt.Fprint(w, r.PostFormValue(k))
-				_, _ = fmt.Fprint(w, "\n")
+				fmt.Fprint(w, k)
+				fmt.Fprint(w, ":")
+				fmt.Fprint(w, r.PostFormValue(k))
+				fmt.Fprint(w, "\n")
 			}
 
 		case "/postjson":
 			w.Header().Set("content-type", "application/json")
 			body, _ := ioutil.ReadAll(r.Body)
-			_, _ = fmt.Fprint(w, `{"code":0,"data":`, string(body), `}`)
+			fmt.Fprint(w, `{"code":0,"data":`, string(body), `}`)
 
 		case "/file/demo.txt":
 			w.Header().Set("content-type", "text/plain")
-			_, _ = fmt.Fprint(w, "this is a demo.")
+			fmt.Fprint(w, "this is a demo.")
 
 		case "/404":
 			w.WriteHeader(http.StatusNotFound)
@@ -50,11 +50,11 @@ func mockServer() *httptest.Server {
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 			w.Header().Set("X-Content-Type-Options", "nosniff")
 			w.WriteHeader(500)
-			_, _ = fmt.Fprintln(w, "internal server error")
+			fmt.Fprintln(w, "internal server error")
 
 		default:
 			w.Header().Set("content-type", "text/plain")
-			_, _ = fmt.Fprint(w, "hello")
+			fmt.Fprint(w, "hello")
 		}
 
 	}
@@ -157,28 +157,28 @@ func TestDownloadFile(t *testing.T) {
 	defer ms.Close()
 
 	url := "https://www.nothissite.com/"
-	localfile := "test.txt"
-	err := DownloadFile(url, localfile)
+	localFile := "testdata/demo.txt"
+	err := DownloadFile(url, localFile)
 	if err == nil {
 		t.Fatalf("DownloadFile %s: error expected, none found", url)
 	}
 
 	url = ms.URL + "/file/demo.txt"
-	localfile = "thisdirnotexist/demo"
-	err = DownloadFile(url, localfile) // create file error
+	localFile = "this_dir_not_exist/demo"
+	err = DownloadFile(url, localFile) // create file error
 	if err == nil {
 		t.Fatalf("DownloadFile %s: error expected, none found", url)
 	}
 
-	localfile = "testdata/demo.txt"
-	err = DownloadFile(url, localfile)
+	localFile = "testdata/demo.txt"
+	err = DownloadFile(url, localFile)
 	if err != nil {
 		t.Fatalf("DownloadFile %s: %v", url, err)
 	}
 
-	if !FileExist(localfile) {
+	if !FileExist(localFile) {
 		t.Error("DownloadFile failed")
 	}
 
-	_ = os.Remove(localfile) // clean up
+	_ = os.Remove(localFile) // clean up
 }

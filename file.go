@@ -52,7 +52,6 @@ func ReadText(filepath string) (text string, err error) {
 
 // WriteText writes a specified string to a text file.
 func WriteText(filepath string, text string) (err error) {
-	//return ioutil.WriteFile(filepath, []byte(text), 0644)
 	return writeText(filepath, text, false)
 }
 
@@ -69,10 +68,10 @@ func writeText(filepath string, text string, appendMode bool) (err error) {
 		mode = os.O_RDWR | os.O_CREATE | os.O_TRUNC
 	}
 	f, err := os.OpenFile(filepath, mode, 0644)
-	defer f.Close()
 	if err != nil {
 		return
 	}
+	defer f.Close()
 	io.WriteString(f, text)
 	return
 }
