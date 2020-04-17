@@ -4,8 +4,10 @@ import (
 	"time"
 )
 
+type dateTimeFormat int
+
 const (
-	myDateTime = iota
+	myDateTime dateTimeFormat = iota
 	myLongDate
 	myShortDate
 	myLongTime
@@ -35,7 +37,7 @@ func FriendlyTime(t time.Time) string {
 }
 
 // FormatDateTime returns an expression formatted as a date or time.
-func FormatDateTime(t time.Time, mode int) string {
+func FormatDateTime(t time.Time, mode dateTimeFormat) string {
 	switch mode {
 	case myDateTime:
 		return t.Format("2006-01-02 15:04:05")
