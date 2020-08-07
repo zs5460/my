@@ -1,10 +1,8 @@
-package my_test
+package my
 
 import (
 	"strings"
 	"testing"
-
-	. "github.com/zs5460/my"	
 )
 
 func TestMD5(t *testing.T) {

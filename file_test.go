@@ -1,10 +1,8 @@
-package my_test
+package my
 
 import (
 	"os"
 	"testing"
-
-	. "github.com/zs5460/my"
 )
 
 func TestFolderExist(t *testing.T) {

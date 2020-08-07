@@ -1,10 +1,8 @@
-package my_test
+package my
 
 import (
 	"testing"
 	"time"
-
-	. "github.com/zs5460/my"
 )
 
 func TestNow(t *testing.T) {

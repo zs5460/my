@@ -1,10 +1,8 @@
-package my_test
+package my
 
 import (
 	"fmt"
 	"testing"
-
-	. "github.com/zs5460/my"
 )
 
 type config struct {

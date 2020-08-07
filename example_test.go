@@ -1,16 +1,14 @@
-package my_test
+package my
 
 import (
 	"fmt"
 	"log"
 	"os"
 	"time"
-
-	"github.com/zs5460/my"
 )
 
 func init() {
-	my.RequestTimeout = 1
+	RequestTimeout = 1
 }
 
 func ExampleLoadJSONConfig() {
@@ -19,7 +17,7 @@ func ExampleLoadJSONConfig() {
 		Version string
 	}
 	var c config
-	err := my.LoadJSONConfig("testdata/config.json", &c)
+	err := LoadJSONConfig("testdata/config.json", &c)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,7 +33,7 @@ func ExampleLoadXMLConfig() {
 		Version string `xml:"version"`
 	}
 	var c config
-	err := my.LoadXMLConfig("testdata/config.xml", &c)
+	err := LoadXMLConfig("testdata/config.xml", &c)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,7 +50,7 @@ func ExampleMustLoadConfig() {
 		Version string `xml:"version"`
 	}
 	var c config
-	my.MustLoadConfig("testdata/config.xml", &c)
+	MustLoadConfig("testdata/config.xml", &c)
 	fmt.Println(c.AppName)
 	fmt.Println(c.Version)
 	// Output:
@@ -61,10 +59,10 @@ func ExampleMustLoadConfig() {
 }
 
 func ExampleCDate() {
-	fmt.Println(my.CDate("1982-2-11 20:13:14").Format("2006-01-02 15:04:05"))
-	fmt.Println(my.CDate("1982-02-11 20:13:14").Format("2006-01-02 15:04:05"))
-	fmt.Println(my.CDate("1982-02-11").Format("2006-01-02 15:04:05"))
-	fmt.Println(my.CDate("82-02-11").Format("2006-01-02 15:04:05")) //unsupport
+	fmt.Println(CDate("1982-2-11 20:13:14").Format("2006-01-02 15:04:05"))
+	fmt.Println(CDate("1982-02-11 20:13:14").Format("2006-01-02 15:04:05"))
+	fmt.Println(CDate("1982-02-11").Format("2006-01-02 15:04:05"))
+	fmt.Println(CDate("82-02-11").Format("2006-01-02 15:04:05")) //unsupport
 
 	// Output:
 	// 1982-02-11 20:13:14
@@ -75,9 +73,9 @@ func ExampleCDate() {
 
 func ExampleIsEmpty() {
 	var s string
-	fmt.Println(my.IsEmpty(s))
+	fmt.Println(IsEmpty(s))
 	s = "zs5460"
-	fmt.Println(my.IsEmpty(s))
+	fmt.Println(IsEmpty(s))
 	// Output:
 	// true
 	// false
@@ -85,12 +83,12 @@ func ExampleIsEmpty() {
 
 func ExampleFormatDateTime() {
 	birthday := time.Date(1982, time.February, 11, 20, 13, 14, 0, time.Local)
-	fmt.Println(my.FormatDateTime(birthday, 0))
-	fmt.Println(my.FormatDateTime(birthday, 1))
-	fmt.Println(my.FormatDateTime(birthday, 2))
-	fmt.Println(my.FormatDateTime(birthday, 3))
-	fmt.Println(my.FormatDateTime(birthday, 4))
-	fmt.Println(my.FormatDateTime(birthday, 5))
+	fmt.Println(FormatDateTime(birthday, 0))
+	fmt.Println(FormatDateTime(birthday, 1))
+	fmt.Println(FormatDateTime(birthday, 2))
+	fmt.Println(FormatDateTime(birthday, 3))
+	fmt.Println(FormatDateTime(birthday, 4))
+	fmt.Println(FormatDateTime(birthday, 5))
 
 	// Output:
 	// 1982-02-11 20:13:14
@@ -102,12 +100,12 @@ func ExampleFormatDateTime() {
 }
 
 func ExampleFriendlyTime() {
-	fmt.Println(my.FriendlyTime(time.Now().Add(-2 * time.Second)))
-	fmt.Println(my.FriendlyTime(time.Now().Add(-2 * time.Minute)))
-	fmt.Println(my.FriendlyTime(time.Now().Add(-2 * time.Hour)))
-	fmt.Println(my.FriendlyTime(time.Now().Add(-2 * 24 * time.Hour)))
+	fmt.Println(FriendlyTime(time.Now().Add(-2 * time.Second)))
+	fmt.Println(FriendlyTime(time.Now().Add(-2 * time.Minute)))
+	fmt.Println(FriendlyTime(time.Now().Add(-2 * time.Hour)))
+	fmt.Println(FriendlyTime(time.Now().Add(-2 * 24 * time.Hour)))
 	longLongAgo, _ := time.Parse("2006-01-02 15:04:05", "1982-02-11 20:13:14")
-	fmt.Println(my.FriendlyTime(longLongAgo))
+	fmt.Println(FriendlyTime(longLongAgo))
 
 	// Output:
 	// 刚刚
@@ -119,9 +117,9 @@ func ExampleFriendlyTime() {
 
 func ExampleLeft() {
 	s := "zs5460"
-	fmt.Println(my.Left(s, 2))
+	fmt.Println(Left(s, 2))
 	s = "公元2000年"
-	fmt.Println(my.Left(s, 5))
+	fmt.Println(Left(s, 5))
 	// Output:
 	// zs
 	// 公元200
@@ -129,9 +127,9 @@ func ExampleLeft() {
 
 func ExampleRight() {
 	s := "zs5460"
-	fmt.Println(my.Right(s, 2))
+	fmt.Println(Right(s, 2))
 	s = "公元2000年"
-	fmt.Println(my.Right(s, 5))
+	fmt.Println(Right(s, 5))
 	// Output:
 	// 60
 	// 2000年
@@ -139,9 +137,9 @@ func ExampleRight() {
 
 func ExampleMid() {
 	s := "zs5460"
-	fmt.Println(my.Mid(s, 2, 2))
+	fmt.Println(Mid(s, 2, 2))
 	s = "公元2000年"
-	fmt.Println(my.Mid(s, 2, 4))
+	fmt.Println(Mid(s, 2, 4))
 	// Output:
 	// 54
 	// 2000
@@ -149,16 +147,16 @@ func ExampleMid() {
 
 func ExampleLen() {
 	s := "zs5460"
-	fmt.Println(my.Len(s))
+	fmt.Println(Len(s))
 	s = "公元2000年"
-	fmt.Println(my.Len(s))
+	fmt.Println(Len(s))
 	// Output:
 	// 6
 	// 7
 }
 
 func ExampleSpace() {
-	s := "a" + my.Space(5) + "b"
+	s := "a" + Space(5) + "b"
 	fmt.Println(s)
 	fmt.Println("1234567")
 	// Output:
@@ -169,13 +167,13 @@ func ExampleSpace() {
 func ExampleTest() {
 	// pattern can be english,chinese,idcard,email,qq,zip,phone,mobile,url,username,password.
 	s := "zs5460"
-	fmt.Println(my.Test(s, "english"))
+	fmt.Println(Test(s, "english"))
 	s = "zhousong"
-	fmt.Println(my.Test(s, "english"))
+	fmt.Println(Test(s, "english"))
 	s = "zs5460.gmail.com"
-	fmt.Println(my.Test(s, "email"))
+	fmt.Println(Test(s, "email"))
 	s = "zs5460@gmail.com"
-	fmt.Println(my.Test(s, "email"))
+	fmt.Println(Test(s, "email"))
 
 	// Output:
 	// false
@@ -185,16 +183,16 @@ func ExampleTest() {
 }
 
 func ExampleFileExist() {
-	fmt.Println(my.FileExist("testdata/config.json"))
-	fmt.Println(my.FileExist("testdata/notexist.txt"))
+	fmt.Println(FileExist("testdata/config.json"))
+	fmt.Println(FileExist("testdata/notexist.txt"))
 	// Output:
 	// true
 	// false
 }
 
 func ExampleFolderExist() {
-	fmt.Println(my.FolderExist("testdata"))
-	fmt.Println(my.FolderExist("testdata2"))
+	fmt.Println(FolderExist("testdata"))
+	fmt.Println(FolderExist("testdata2"))
 
 	// Output:
 	// true
@@ -202,7 +200,7 @@ func ExampleFolderExist() {
 }
 
 func ExampleAppPath() {
-	dir := my.AppPath()
+	dir := AppPath()
 	// dir is your app startup dir
 	dir = "c:\\fakeapp"
 	fmt.Println(dir)
@@ -214,7 +212,7 @@ func ExampleAppPath() {
 func ExampleGetURL() {
 	ms := mockServer()
 	defer ms.Close()
-	s, err := my.GetURL(ms.URL + "/ping")
+	s, err := GetURL(ms.URL + "/ping")
 	if err != nil {
 		return
 	}
@@ -233,7 +231,7 @@ func ExampleGetJSON() {
 		Total   int           `json:"total"`
 	}
 	var ret Result
-	err := my.GetJSON(ms.URL+"/json", &ret)
+	err := GetJSON(ms.URL+"/json", &ret)
 	if err != nil {
 		return
 	}
@@ -245,7 +243,7 @@ func ExampleGetJSON() {
 func ExamplePostURL() {
 	ms := mockServer()
 	defer ms.Close()
-	s, err := my.PostURL(ms.URL+"/post", "name=zs")
+	s, err := PostURL(ms.URL+"/post", "name=zs")
 	if err != nil {
 		return
 	}
@@ -258,7 +256,7 @@ func ExampleDownloadFile() {
 	ms := mockServer()
 	defer ms.Close()
 	localFile := "testdata/demo.txt"
-	err := my.DownloadFile(ms.URL+"/file/demo.txt", localFile)
+	err := DownloadFile(ms.URL+"/file/demo.txt", localFile)
 	if err != nil {
 		log.Println(err)
 	}

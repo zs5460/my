@@ -1,4 +1,4 @@
-package my_test
+package my
 
 import (
 	"fmt"
@@ -7,8 +7,6 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
-
-	. "github.com/zs5460/my"
 )
 
 func mockServer() *httptest.Server {
