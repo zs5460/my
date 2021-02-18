@@ -3,7 +3,7 @@ package my
 import (
 	"encoding/json"
 	"encoding/xml"
-	"io/ioutil"
+	"os"
 	"path"
 )
 
@@ -17,7 +17,7 @@ func init() {
 
 // LoadJSONConfig load config from json file.
 func LoadJSONConfig(fn string, v interface{}) error {
-	content, err := ioutil.ReadFile(fn)
+	content, err := os.ReadFile(fn)
 	if err != nil {
 		return err
 	}
@@ -27,7 +27,7 @@ func LoadJSONConfig(fn string, v interface{}) error {
 
 // LoadXMLConfig load config from xml file.
 func LoadXMLConfig(fn string, v interface{}) error {
-	content, err := ioutil.ReadFile(fn)
+	content, err := os.ReadFile(fn)
 	if err != nil {
 		return err
 	}

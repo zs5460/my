@@ -3,7 +3,6 @@ package my
 import (
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
@@ -25,7 +24,7 @@ func GetURL(url string) (reply []byte, err error) {
 		return
 	}
 	defer resp.Body.Close()
-	reply, err = ioutil.ReadAll(resp.Body)
+	reply, err = io.ReadAll(resp.Body)
 	return
 }
 
@@ -39,7 +38,7 @@ func GetJSON(url string, v interface{}) error {
 		return err
 	}
 	defer resp.Body.Close()
-	reply, _ := ioutil.ReadAll(resp.Body)
+	reply, _ := io.ReadAll(resp.Body)
 	return json.Unmarshal(reply, v)
 }
 
@@ -56,7 +55,7 @@ func PostURL(url string, params string) (reply []byte, err error) {
 		return
 	}
 	defer resp.Body.Close()
-	reply, err = ioutil.ReadAll(resp.Body)
+	reply, err = io.ReadAll(resp.Body)
 	return
 }
 
@@ -73,7 +72,7 @@ func PostJSON(url string, params string) (reply []byte, err error) {
 		return
 	}
 	defer resp.Body.Close()
-	reply, err = ioutil.ReadAll(resp.Body)
+	reply, err = io.ReadAll(resp.Body)
 	return
 }
 

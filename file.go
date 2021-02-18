@@ -2,7 +2,6 @@ package my
 
 import (
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -42,7 +41,7 @@ func MakeDir(dir string) error {
 
 // ReadText reads an entire text file and returns the resulting string.
 func ReadText(filepath string) (text string, err error) {
-	b, err := ioutil.ReadFile(filepath)
+	b, err := os.ReadFile(filepath)
 	if err != nil {
 		return
 	}
