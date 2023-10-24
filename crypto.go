@@ -6,13 +6,11 @@ import (
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
-	"hash"
 )
 
 // MD5 calculate the md5 hash of a string.
 func MD5(s string) string {
-	var h hash.Hash
-	h = md5.New()
+	h := md5.New()
 	h.Write([]byte(s))
 	return hex.EncodeToString(h.Sum(nil))
 
@@ -20,16 +18,14 @@ func MD5(s string) string {
 
 // SHA1 calculate the sha1 hash of a string.
 func SHA1(s string) string {
-	var h hash.Hash
-	h = sha1.New()
+	h := sha1.New()
 	h.Write([]byte(s))
 	return hex.EncodeToString(h.Sum(nil))
 }
 
 // SHA256 calculate the sha256 hash of a string.
 func SHA256(s string) string {
-	var h hash.Hash
-	h = sha256.New()
+	h := sha256.New()
 	h.Write([]byte(s))
 	return hex.EncodeToString(h.Sum(nil))
 }

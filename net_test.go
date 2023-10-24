@@ -2,7 +2,7 @@ package my
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -34,7 +34,7 @@ func mockServer() *httptest.Server {
 
 		case "/postjson":
 			w.Header().Set("content-type", "application/json")
-			body, _ := ioutil.ReadAll(r.Body)
+			body, _ := io.ReadAll(r.Body)
 			fmt.Fprint(w, `{"code":0,"data":`, string(body), `}`)
 
 		case "/file/demo.txt":

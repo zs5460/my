@@ -21,7 +21,7 @@ func Now() string {
 
 // FriendlyTime returns easy to read format.
 func FriendlyTime(t time.Time) string {
-	seconds := int(time.Now().Sub(t).Seconds())
+	seconds := int(time.Since(t).Seconds())
 	switch {
 	case seconds > 0 && seconds < 60:
 		return "刚刚"

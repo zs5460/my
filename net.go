@@ -16,10 +16,8 @@ var (
 
 // GetURL request a url.
 func GetURL(url string) (reply []byte, err error) {
-	cli := &http.Client{
-		Timeout: RequestTimeout * time.Second,
-	}
-	resp, err := cli.Get(url)
+	http.DefaultClient.Timeout = RequestTimeout * time.Second
+	resp, err := http.Get(url)
 	if err != nil {
 		return
 	}
@@ -30,10 +28,8 @@ func GetURL(url string) (reply []byte, err error) {
 
 // GetJSON get json from a url and unmarshal to a struct.
 func GetJSON(url string, v interface{}) error {
-	cli := &http.Client{
-		Timeout: RequestTimeout * time.Second,
-	}
-	resp, err := cli.Get(url)
+	http.DefaultClient.Timeout = RequestTimeout * time.Second
+	resp, err := http.Get(url)
 	if err != nil {
 		return err
 	}
@@ -45,10 +41,8 @@ func GetJSON(url string, v interface{}) error {
 // PostURL request a url with POST method.
 // params is a string like k1=v1&k2=v2
 func PostURL(url string, params string) (reply []byte, err error) {
-	cli := &http.Client{
-		Timeout: RequestTimeout * time.Second,
-	}
-	resp, err := cli.Post(url,
+	http.DefaultClient.Timeout = RequestTimeout * time.Second
+	resp, err := http.Post(url,
 		"application/x-www-form-urlencoded",
 		strings.NewReader(params))
 	if err != nil {
@@ -62,10 +56,8 @@ func PostURL(url string, params string) (reply []byte, err error) {
 // PostJSON request a url with POST method
 // params is a json string
 func PostJSON(url string, params string) (reply []byte, err error) {
-	cli := &http.Client{
-		Timeout: RequestTimeout * time.Second,
-	}
-	resp, err := cli.Post(url,
+	http.DefaultClient.Timeout = RequestTimeout * time.Second
+	resp, err := http.Post(url,
 		"application/json;charset=UTF-8",
 		strings.NewReader(params))
 	if err != nil {
@@ -78,8 +70,8 @@ func PostJSON(url string, params string) (reply []byte, err error) {
 
 // DownloadFile download a file from a url.
 func DownloadFile(url, filepath string) (err error) {
-	cli := &http.Client{}
-	resp, err := cli.Get(url)
+	http.DefaultClient.Timeout = 0
+	resp, err := http.Get(url)
 	if err != nil {
 		return
 	}
@@ -93,4 +85,18 @@ func DownloadFile(url, filepath string) (err error) {
 
 	_, err = io.Copy(file, resp.Body)
 	return
+}
+
+// Handler wraps the http.Handler with panic recovery support.
+func RecoverWrap(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if err := recover(); err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(http.StatusText(http.StatusInternalServerError)))
+			}
+		}()
+
+		h.ServeHTTP(w, r)
+	})
 }

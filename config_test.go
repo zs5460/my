@@ -1,7 +1,6 @@
 package my
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -53,7 +52,7 @@ func TestLoadXMLConfig(t *testing.T) {
 func TestMustLoadConfig_1(t *testing.T) {
 	defer func() {
 		if err := recover(); err != nil {
-			t.Log(fmt.Sprintf("panic recover\n %v", err))
+			t.Logf("panic recover: %v\n", err)
 		}
 	}()
 
@@ -65,7 +64,7 @@ func TestMustLoadConfig_1(t *testing.T) {
 func TestMustLoadConfig_2(t *testing.T) {
 	defer func() {
 		if err := recover(); err != nil {
-			t.Log(fmt.Sprintf("panic recover\n %v", err))
+			t.Logf("panic recover: %v\n", err)
 		}
 	}()
 
