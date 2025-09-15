@@ -81,10 +81,10 @@ func TestGetJSON(t *testing.T) {
 	defer ms.Close()
 
 	type result struct {
-		Code    int           `json:"code"`
-		Message string        `json:"message"`
-		Data    []interface{} `json:"data"`
-		Total   int           `json:"total"`
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+		Data    []any  `json:"data"`
+		Total   int    `json:"total"`
 	}
 
 	var v = &result{}

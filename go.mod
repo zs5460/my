@@ -1,3 +1,3 @@
 module github.com/zs5460/my
 
-go 1.14
+go 1.21

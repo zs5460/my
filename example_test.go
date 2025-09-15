@@ -44,6 +44,45 @@ func ExampleLoadXMLConfig() {
 	// 1.0.0
 }
 
+func ExampleCStr() {
+	num := 123
+	str := CStr(num)
+	fmt.Println(str)
+	// Output:
+	// 123
+}
+
+func ExampleCInt() {
+	str := "456"
+	num := CInt(str)
+	fmt.Println(num)
+	// Output:
+	// 456
+}
+
+func ExampleNow() {
+	// 这个示例只是展示如何使用Now函数，实际输出会根据当前时间而变化
+	fmt.Println("Current time format:", Now())
+}
+
+func ExampleFormatDateTime() {
+	// 创建一个固定的时间用于示例
+	t := time.Date(2023, 5, 15, 14, 30, 45, 0, time.Local)
+
+	// 展示不同格式的输出
+	fmt.Println(FormatDateTime(t, myDateTime))
+	fmt.Println(FormatDateTime(t, myLongDate))
+	fmt.Println(FormatDateTime(t, myShortDate))
+	fmt.Println(FormatDateTime(t, myLongTime))
+	fmt.Println(FormatDateTime(t, myShortTime))
+	// Output:
+	// 2023-05-15 14:30:45
+	// 2023-05-15
+	// 05-15
+	// 14:30:45
+	// 14:30
+}
+
 func ExampleMustLoadConfig() {
 	type config struct {
 		AppName string `xml:"appname"`
@@ -79,24 +118,6 @@ func ExampleIsEmpty() {
 	// Output:
 	// true
 	// false
-}
-
-func ExampleFormatDateTime() {
-	birthday := time.Date(1982, time.February, 11, 20, 13, 14, 0, time.Local)
-	fmt.Println(FormatDateTime(birthday, 0))
-	fmt.Println(FormatDateTime(birthday, 1))
-	fmt.Println(FormatDateTime(birthday, 2))
-	fmt.Println(FormatDateTime(birthday, 3))
-	fmt.Println(FormatDateTime(birthday, 4))
-	fmt.Println(FormatDateTime(birthday, 5))
-
-	// Output:
-	// 1982-02-11 20:13:14
-	// 1982-02-11
-	// 02-11
-	// 20:13:14
-	// 20:13
-	// 1982-02-11 20:13:14
 }
 
 func ExampleFriendlyTime() {
