@@ -7,7 +7,7 @@ import (
 	"path"
 )
 
-var configParser = make(map[string]func(string, interface{}) error, 0)
+var configParser = make(map[string]func(string, any) error, 0)
 
 func init() {
 	configParser["default"] = LoadJSONConfig
@@ -16,7 +16,7 @@ func init() {
 }
 
 // LoadJSONConfig load config from json file.
-func LoadJSONConfig(fn string, v interface{}) error {
+func LoadJSONConfig(fn string, v any) error {
 	content, err := os.ReadFile(fn)
 	if err != nil {
 		return err
@@ -26,7 +26,7 @@ func LoadJSONConfig(fn string, v interface{}) error {
 }
 
 // LoadXMLConfig load config from xml file.
-func LoadXMLConfig(fn string, v interface{}) error {
+func LoadXMLConfig(fn string, v any) error {
 	content, err := os.ReadFile(fn)
 	if err != nil {
 		return err
@@ -36,7 +36,7 @@ func LoadXMLConfig(fn string, v interface{}) error {
 }
 
 // MustLoadConfig load config or panic.
-func MustLoadConfig(fn string, v interface{}) {
+func MustLoadConfig(fn string, v any) {
 	configtype := path.Ext(fn)
 	parser, exist := configParser[configtype]
 	if !exist {

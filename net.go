@@ -28,7 +28,7 @@ func GetURL(url string) (reply []byte, err error) {
 }
 
 // GetJSON get json from a url and unmarshal to a struct.
-func GetJSON(url string, v interface{}) error {
+func GetJSON(url string, v any) error {
 	http.DefaultClient.Timeout = RequestTimeout * time.Second
 	resp, err := http.Get(url)
 	if err != nil {

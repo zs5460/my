@@ -246,10 +246,10 @@ func ExampleGetJSON() {
 	ms := mockServer()
 	defer ms.Close()
 	type Result struct {
-		Code    int           `json:"code"`
-		Message string        `json:"message"`
-		Data    []interface{} `json:"data"`
-		Total   int           `json:"total"`
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+		Data    []any  `json:"data"`
+		Total   int    `json:"total"`
 	}
 	var ret Result
 	err := GetJSON(ms.URL+"/json", &ret)
