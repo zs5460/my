@@ -33,7 +33,7 @@ func TestMakeDir(t *testing.T) {
 	if err != nil {
 		t.Errorf("MakeDir did not work properly, %v", err)
 	}
-	os.Remove(testdir) //clean up
+	_ = os.Remove(testdir) //clean up
 }
 
 func TestReadText(t *testing.T) {
@@ -61,7 +61,7 @@ func TestWriteText(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.Remove(fn) // clean up
+	defer func() { _ = os.Remove(fn) }() // clean up
 	c, err := ReadText(fn)
 	if err != nil {
 		t.Errorf("WriteText did not work properly")
@@ -78,7 +78,7 @@ func TestAppendText(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.Remove(fn) // clean up
+	defer func() { _ = os.Remove(fn) }() // clean up
 	err = AppendText(fn, text)
 	if err != nil {
 		t.Fatal(err)

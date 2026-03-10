@@ -220,16 +220,6 @@ func ExampleFolderExist() {
 	// false
 }
 
-func ExampleAppPath() {
-	dir := AppPath()
-	// dir is your app startup dir
-	dir = "c:\\fakeapp"
-	fmt.Println(dir)
-
-	// Output:
-	// c:\fakeapp
-}
-
 func ExampleGetURL() {
 	ms := mockServer()
 	defer ms.Close()
@@ -281,7 +271,7 @@ func ExampleDownloadFile() {
 	if err != nil {
 		log.Println(err)
 	}
-	os.Remove(localFile) //clean up
+	_ = os.Remove(localFile) //clean up
 	fmt.Println("OK")
 	// Output:
 	// OK

@@ -70,7 +70,7 @@ func writeText(filepath string, text string, appendMode bool) (err error) {
 	if err != nil {
 		return
 	}
-	defer f.Close()
-	io.WriteString(f, text)
+	defer func() { _ = f.Close() }()
+	_, err = io.WriteString(f, text)
 	return
 }

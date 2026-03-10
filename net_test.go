@@ -16,30 +16,27 @@ func mockServer() *httptest.Server {
 		switch url {
 		case "/ping":
 			w.Header().Set("content-type", "text/plain")
-			fmt.Fprint(w, "PONG")
+			_, _ = fmt.Fprint(w, "PONG")
 
 		case "/json":
 			w.Header().Set("content-type", "application/json")
-			fmt.Fprint(w, `{"code":0,"message":"ok"}`)
+			_, _ = fmt.Fprint(w, `{"code":0,"message":"ok"}`)
 
 		case "/post":
 			w.Header().Set("content-type", "text/plain")
 			_ = r.ParseForm()
 			for k := range r.PostForm {
-				fmt.Fprint(w, k)
-				fmt.Fprint(w, ":")
-				fmt.Fprint(w, r.PostFormValue(k))
-				fmt.Fprint(w, "\n")
+				_, _ = fmt.Fprint(w, k, ":", r.PostFormValue(k), "\n")
 			}
 
 		case "/postjson":
 			w.Header().Set("content-type", "application/json")
 			body, _ := io.ReadAll(r.Body)
-			fmt.Fprint(w, `{"code":0,"data":`, string(body), `}`)
+			_, _ = fmt.Fprint(w, `{"code":0,"data":`, string(body), `}`)
 
 		case "/file/demo.txt":
 			w.Header().Set("content-type", "text/plain")
-			fmt.Fprint(w, "this is a demo.")
+			_, _ = fmt.Fprint(w, "this is a demo.")
 
 		case "/404":
 			w.WriteHeader(http.StatusNotFound)
@@ -48,11 +45,11 @@ func mockServer() *httptest.Server {
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 			w.Header().Set("X-Content-Type-Options", "nosniff")
 			w.WriteHeader(500)
-			fmt.Fprintln(w, "internal server error")
+			_, _ = fmt.Fprintln(w, "internal server error")
 
 		default:
 			w.Header().Set("content-type", "text/plain")
-			fmt.Fprint(w, "hello")
+			_, _ = fmt.Fprint(w, "hello")
 		}
 
 	}

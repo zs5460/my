@@ -22,7 +22,7 @@ func GetURL(url string) (reply []byte, err error) {
 	if err != nil {
 		return
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	reply, err = io.ReadAll(resp.Body)
 	return
 }
@@ -34,7 +34,7 @@ func GetJSON(url string, v any) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	reply, _ := io.ReadAll(resp.Body)
 	return json.Unmarshal(reply, v)
 }
@@ -49,7 +49,7 @@ func PostURL(url string, params string) (reply []byte, err error) {
 	if err != nil {
 		return
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	reply, err = io.ReadAll(resp.Body)
 	return
 }
@@ -64,7 +64,7 @@ func PostJSON(url string, params string) (reply []byte, err error) {
 	if err != nil {
 		return
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	reply, err = io.ReadAll(resp.Body)
 	return
 }
@@ -76,13 +76,13 @@ func DownloadFile(url, filepath string) (err error) {
 	if err != nil {
 		return
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	file, err := os.Create(filepath)
 	if err != nil {
 		return
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	_, err = io.Copy(file, resp.Body)
 	return
@@ -94,7 +94,7 @@ func RecoverWrap(h http.Handler) http.Handler {
 		defer func() {
 			if err := recover(); err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte(http.StatusText(http.StatusInternalServerError)))
+				_, _ = w.Write([]byte(http.StatusText(http.StatusInternalServerError)))
 			}
 		}()
 

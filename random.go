@@ -5,10 +5,6 @@ import (
 	"time"
 )
 
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
-
 // RndNumber returns a string of numbers of the specified length.
 func RndNumber(n int) string {
 	return genRandom(n, 0)
