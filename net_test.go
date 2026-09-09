@@ -107,6 +107,10 @@ func TestGetJSON(t *testing.T) {
 		t.Fatalf("message = %q\nexpected = %q", v.Message, "ok")
 	}
 
+	_, err = GetURL(ms.URL + "/404")
+	if err == nil {
+		t.Fatal("GetURL should reject non-2xx responses")
+	}
 }
 
 func TestPostURL(t *testing.T) {
