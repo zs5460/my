@@ -1,11 +1,14 @@
 package my
 
 import (
+	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -180,4 +183,92 @@ func TestDownloadFile(t *testing.T) {
 	}
 
 	_ = os.Remove(localFile) // clean up
+}
+
+func captureLog(t *testing.T) *bytes.Buffer {
+	t.Helper()
+	var buf bytes.Buffer
+	old := log.Writer()
+	log.SetOutput(&buf)
+	t.Cleanup(func() { log.SetOutput(old) })
+	return &buf
+}
+
+func TestRecoverWrap(t *testing.T) {
+	logs := captureLog(t)
+	h := RecoverWrap(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		panic("boom")
+	}))
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/", nil))
+	if rec.Code != http.StatusInternalServerError {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusInternalServerError)
+	}
+	if body, want := rec.Body.String(), http.StatusText(http.StatusInternalServerError); body != want {
+		t.Fatalf("body = %q, want %q", body, want)
+	}
+	if !strings.Contains(logs.String(), "panic: boom") {
+		t.Fatalf("panic was not logged: %q", logs.String())
+	}
+}
+
+func TestRecoverWrapPassThrough(t *testing.T) {
+	h := RecoverWrap(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusTeapot)
+		_, _ = w.Write([]byte("ok"))
+	}))
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/", nil))
+	if rec.Code != http.StatusTeapot || rec.Body.String() != "ok" {
+		t.Fatalf("status = %d, body = %q", rec.Code, rec.Body.String())
+	}
+}
+
+func TestRemoteIP(t *testing.T) {
+	tests := []struct {
+		addr string
+		want string
+	}{
+		{"1.2.3.4:5678", "1.2.3.4"},
+		{"[2001:db8::1]:443", "2001:db8::1"},
+		{"1.2.3.4", ""},
+		{"", ""},
+	}
+	for _, tt := range tests {
+		r := httptest.NewRequest(http.MethodGet, "/", nil)
+		r.RemoteAddr = tt.addr
+		if got := RemoteIP(r); got != tt.want {
+			t.Errorf("RemoteIP(%q) = %q, want %q", tt.addr, got, tt.want)
+		}
+	}
+}
+
+func TestClientIP(t *testing.T) {
+	tests := []struct {
+		name   string
+		header string
+		value  string
+		remote string
+		want   string
+	}{
+		{"xff", "X-Forwarded-For", "9.9.9.9", "1.2.3.4:5678", "9.9.9.9"},
+		{"xff list", "X-Forwarded-For", "9.9.9.9, 8.8.8.8", "1.2.3.4:5678", "9.9.9.9"},
+		{"xff spaces", "X-Forwarded-For", "  9.9.9.9  ", "1.2.3.4:5678", "9.9.9.9"},
+		{"xff empty", "X-Forwarded-For", "", "1.2.3.4:5678", "1.2.3.4"},
+		{"x-real-ip", "X-Real-Ip", "7.7.7.7", "1.2.3.4:5678", "7.7.7.7"},
+		{"remote", "", "", "1.2.3.4:5678", "1.2.3.4"},
+		{"empty", "", "", "", ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			r := httptest.NewRequest(http.MethodGet, "/", nil)
+			if tt.header != "" {
+				r.Header.Set(tt.header, tt.value)
+			}
+			r.RemoteAddr = tt.remote
+			if got := ClientIP(r); got != tt.want {
+				t.Errorf("ClientIP() = %q, want %q", got, tt.want)
+			}
+		})
+	}
 }

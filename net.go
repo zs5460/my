@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"os"
+	"runtime/debug"
 	"strings"
 	"time"
 )
@@ -113,11 +115,13 @@ func checkResponse(resp *http.Response) error {
 	return nil
 }
 
-// Handler wraps the http.Handler with panic recovery support.
+// RecoverWrap wraps the http.Handler with panic recovery support.
+// 发生 panic 时记录堆栈并返回 500，避免静默失败。
 func RecoverWrap(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
+				log.Printf("panic: %v\n%s", err, debug.Stack())
 				w.WriteHeader(http.StatusInternalServerError)
 				_, _ = w.Write([]byte(http.StatusText(http.StatusInternalServerError)))
 			}
